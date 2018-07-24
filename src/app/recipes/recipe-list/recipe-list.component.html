@@ -1,0 +1,19 @@
+<table class="table table-sm table-hover">
+  <tr *ngFor="let rec of recService.recipeList | paginate: { itemsPerPage: 3, currentPage: p }">
+    <td>{{rec.Specialty}}</td>
+    <td>{{rec.Recipe_Parent}}</td>
+    <td>{{rec.Recipe}}</td>
+    <td>
+      <a class="btn" (click)="showForEdit(rec)">
+        <i class="fa fa-pencil-square-o"></i>
+      </a>
+      <a class="btn text-danger" (click)="onDelete(rec.RecipeId)">
+        <i class="fa fa-trash-o"></i>
+      </a>
+      <a class="btn" (click)="moveon(rec)">
+        <i class="fa fa-eye"></i>
+      </a>
+    </td>
+  </tr>  
+  <pagination-controls (pageChange)="p = $event"></pagination-controls> 
+</table>

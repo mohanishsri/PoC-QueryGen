@@ -1,0 +1,48 @@
+<form>
+    <div class="container">
+        <div style="text-align:center">
+          <h2 class="jumbotron bg-secondary text-white">Make Recipe</h2>
+        </div>
+      </div>
+      <p class="p">
+          Create Recipe for Speciality ' {{this.speciality}} ' , Recipe Parent '{{this.recipeparent}}' and Recipe {{this.recipename}}
+      </p>  
+
+    <div class="form-group">
+          <label for="exampleInputEmail1">Select Table</label>
+          <input type="text" class="form-control" name="exampleInputTable" id="exampleInputTable" [(ngModel)]="inputtable" placeholder="Enter Table Name">      
+    </div>      
+    <div class="form-group">
+    <label for="exampleSelect2">Select Columns</label>
+    <angular2-multiselect [data]="dropdownList" name="ddlselect" [(ngModel)]="selectedItems" 
+    [settings]="dropdownSettings" 
+    (onSelect)="onItemSelect($event)" 
+    (onDeSelect)="OnItemDeSelect($event)"
+    (onSelectAll)="onSelectAll($event)"
+    (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+    </div>    
+    <div class="form-group">
+      <label for="exampleInputPassword1">Select Attribute</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>    
+    <table>
+        <tr>
+          <td>
+              <button type="submit" class="btn btn-primary" (click)="genquery()">Submit</button>
+          </td>
+          <td>
+              <button type="button" class="btn btn-primary" (click)="backmove()">Back</button>
+          </td>
+        </tr>
+    </table>   
+
+    <div class="form-group">
+      <label for="exampleTextarea">Display Query</label>
+      <textarea class="form-control" [(ngModel)]="query" name="exampleTextar" id="exampleTextarea" rows="3"></textarea>
+    </div>    
+   
+  </form>
+
+ 
+
+

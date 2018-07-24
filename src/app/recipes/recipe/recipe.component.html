@@ -1,0 +1,32 @@
+<form class="recipe-form" #recipeForm="ngForm" (ngSubmit)="onSubmit(recipeForm)">  
+    <input type="hidden" name="RecipeId" #RecipeId="ngModel" [(ngModel)]="recService.selectedRecipe.RecipeId">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <input class="form-control" name="Specialty" #Specialty="ngModel" [(ngModel)]="recService.selectedRecipe.Specialty"
+        placeholder="Specialty">      
+    </div>
+    <div class="form-group col-md-4">
+      <input class="form-control" name="Recipe_Parent" #Recipe_Parent="ngModel" [(ngModel)]="recService.selectedRecipe.Recipe_Parent" placeholder="Recipe Parent"
+     >      
+    </div>
+    <div class="form-group col-md-4">
+      <input class="form-control" name="Recipe" #Recipe="ngModel" [(ngModel)]="recService.selectedRecipe.Recipe" placeholder="Recipe"
+      >      
+    </div>   
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <button [disabled]="!recipeForm.valid" type="submit" class="btn btn-lg btn-block btn-info">
+        <i class="fa fa-floppy-o"></i> Submit</button>
+    </div>
+    <div class="form-group col-md-4">
+        <button type="button" class="btn btn-lg btn-block btn-info" (click)="searchRecipe(recipeForm)">
+          <i class="fa fa-search"></i> Search</button>
+      </div>
+    <div class="form-group col-md-4">
+      <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="resetForm(recipeForm)">
+        <i class="fa fa-repeat"></i> Reset</button>
+    </div>
+  </div>  
+</form>
