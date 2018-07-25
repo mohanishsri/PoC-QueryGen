@@ -1,27 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-
+import {BsModalService} from 'ngx-bootstrap';
+import {BsModalRef} from 'ngx-bootstrap';
 
 import { Recipe } from '../shared/recipe.model';
+import {AttributeValues} from '../shared/attributes.model';
+
+import { AddattributeComponent } from './addattribute/addattribute.component';
+
 @Component({
   selector: 'app-createrecipe',
   templateUrl: './createrecipe.component.html',
   styleUrls: ['./createrecipe.component.css']
 })
 export class CreaterecipeComponent implements OnInit {
+bsModalRef: BsModalRef;
 id:number;
 speciality:string;
 recipeparent:string;
 recipename:string; 
 query:string;
 inputtable:string;
+attributevaluefromModel:AttributeValues[]=[];
 ngs 
 
 dropdownList = [];
 selectedItems = [];
 dropdownSettings = {};
 
-  constructor(private _route:ActivatedRoute, private _routeback:Router) { }
+  constructor(private _route:ActivatedRoute, private _routeback:Router, private modalService: BsModalService) { }
 
   ngOnInit() {
     this._route.paramMap.subscribe(params => {
@@ -30,18 +37,16 @@ dropdownSettings = {};
     });   
     
     this._route.paramMap.subscribe(params => {
-      this.speciality=params.get('sp');   
-      console.log(this.speciality);
+      this.speciality=params.get('sp');       
       });
       
     this._route.paramMap.subscribe(params => {
         this.recipeparent=params.get('rp');   
-        console.log(this.recipeparent);
+       
         });
 
     this._route.paramMap.subscribe(params => {
-       this.recipename=params.get('r');   
-       console.log(this.recipename);
+       this.recipename=params.get('r');
           });
 
     this.dropdownList = [
@@ -87,12 +92,32 @@ onDeSelectAll(items: any){
     console.log(items);
 }
 
+openModalWithComponent() {
+  const initialState = {
+    list: [
+      'Open a modal with component',
+      'Pass your data',
+      'Do something else',
+      '...'
+    ],
+    title: 'Modal with component'
+  };  
+  this.bsModalRef = this.modalService.show(AddattributeComponent, {initialState});
+
+  this.bsModalRef.content.triggerfromModel.subscribe(result => {
+    this.attributevaluefromModel = result as AttributeValues[]
+      })
+      
+  this.bsModalRef.content.closeBtnName = 'Close';
+}
+
+
 genquery()
-{
-  console.log('hi');
-  let str:string=''; 
-  console.log(this.selectedItems);
-  
+{  
+  let str:string='';  
+
+    console.log(this.attributevaluefromModel);
+    
   for(let i=0; i<this.selectedItems.length; i++){
    
     if(str!='')
@@ -104,15 +129,6 @@ genquery()
       str = this.selectedItems[i].itemName;
     }
  } 
-
-  
-  var str1 = new String( "Select " + str ); 
-  var str2 = new String( "From " + this.inputtable.toString());
-  
-  var str3 = str1.concat(str2.toString());  
-
-  this.query = str3.toString();
-
 
 }
 

@@ -22,14 +22,15 @@
     (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
     </div>    
     <div class="form-group">
-      <label for="exampleInputPassword1">Select Attribute</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <label for="exampleInputAttribute">Select Attribute</label>
+      <input type="text" id="exampleInputAttribute" placeholder="Attributes">
+      <button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Add</button>
     </div>    
     <table>
         <tr>
           <td>
               <button type="submit" class="btn btn-primary" (click)="genquery()">Submit</button>
-          </td>
+          </td>         
           <td>
               <button type="button" class="btn btn-primary" (click)="backmove()">Back</button>
           </td>

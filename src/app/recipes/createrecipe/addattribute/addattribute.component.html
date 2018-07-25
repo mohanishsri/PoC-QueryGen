@@ -1,0 +1,59 @@
+
+ <div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table>
+      <th>AttributeName</th>
+      <th>Column</th>
+      <th>Values</th>
+      <tr>
+        <td> <input type="text"  name="Specialty" [(ngModel)]="attributename"
+          placeholder="Specialty"></td>
+        <td>
+            <select id="ddlcolumnname" (change)="onSelect($event.target.value)" [(ngModel)]="selectedcolname" style="width:100px;">  
+                <option value="0">--Select--</option>  
+                <option *ngFor="let colname of ColName" 
+                value={{colname.ID}}>{{colname.Name}}</option>           
+              </select> 
+        </td>
+        <td>
+            <select id="ddlcolumnvalue" [(ngModel)]="selectedcolvalue" style="width:100px;">  
+                <option *ngIf='ColValues == 0' value="0">--Select--</option>  
+                <option *ngFor="let sub of ColValues" value={{sub.Sub_ID}}>{{sub.ColValue}}</option>          
+              </select>  
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <button type="submit" class="btn btn-primary" (click)="addattribute()">Submit</button>
+          </td>         
+          <td>
+              <button type="button" class="btn btn-primary">Search</button>
+          </td>
+        </tr>
+    </table> 
+    
+    <table class="table table-sm table-hover">
+      <th>Select</th>
+      <th>Attribute</th>
+      <th>Column </th>
+      <th>Value</th>
+        <tr *ngFor="let att of AttributeList | paginate: { itemsPerPage: 3, currentPage: p }">
+          <td><input type="checkbox" (change)="selectvalue(att)"> </td>
+          <td>{{att.attributename}}</td>
+          <td>{{att.columnname}}</td>
+          <td>{{att.columnvalue}}</td>         
+        </tr>  
+        <pagination-controls (pageChange)="p = $event"></pagination-controls> 
+      </table>        
+    
+  </div>    
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="onclose()">{{closeBtnName}}</button>
+  </div>
+  
+

@@ -1,4 +1,7 @@
 <table class="table table-sm table-hover">
+  <th>Specialty</th>
+  <th>Recipe_Parent</th>
+  <th>Recipe</th>
   <tr *ngFor="let rec of recService.recipeList | paginate: { itemsPerPage: 3, currentPage: p }">
     <td>{{rec.Specialty}}</td>
     <td>{{rec.Recipe_Parent}}</td>
