@@ -22,11 +22,13 @@ recipename:string;
 query:string;
 inputtable:string;
 attributevaluefromModel:AttributeValues[]=[];
+wherestring:string='';
 ngs 
 
 dropdownList = [];
 selectedItems = [];
 dropdownSettings = {};
+selectedAttributes:string='';
 
   constructor(private _route:ActivatedRoute, private _routeback:Router, private modalService: BsModalService) { }
 
@@ -105,18 +107,36 @@ openModalWithComponent() {
   this.bsModalRef = this.modalService.show(AddattributeComponent, {initialState});
 
   this.bsModalRef.content.triggerfromModel.subscribe(result => {
-    this.attributevaluefromModel = result as AttributeValues[]
+       this.oncloseModel(result);
       })
       
   this.bsModalRef.content.closeBtnName = 'Close';
 }
 
+oncloseModel(result)
+{
+  this.attributevaluefromModel = result as AttributeValues[];
+  
+  for(let i=0; i<this.attributevaluefromModel.length;i++)
+  {
+    if(this.selectedAttributes!='')
+    {      
+      this.selectedAttributes = this.selectedAttributes + ', ' + this.attributevaluefromModel[i].attributename;
+      this.wherestring = this.wherestring + ' or ' + this.attributevaluefromModel[i].columnname + '=' + 
+                          this.attributevaluefromModel[i].columnvalue;
+    }
+    else
+    {
+      this.selectedAttributes = this.attributevaluefromModel[i].attributename;
+      this.wherestring  = " Where " + this.attributevaluefromModel[i].columnname + '=' + 
+                           this.attributevaluefromModel[i].columnvalue;
+    }
+  }  
+}
 
 genquery()
 {  
-  let str:string='';  
-
-    console.log(this.attributevaluefromModel);
+  let str:string='';      
     
   for(let i=0; i<this.selectedItems.length; i++){
    
@@ -129,6 +149,15 @@ genquery()
       str = this.selectedItems[i].itemName;
     }
  } 
+
+  var str1 = new String( "Select " + str ); 
+  var str2 = new String( "From " + this.inputtable.toString()); 
+
+  var str3 = str1.concat(str2.toString());  
+
+  this.query = str3.concat(this.wherestring.toString());  
+
+  //this.query = str4.toString();
 
 }
 

@@ -23,7 +23,7 @@
     </div>    
     <div class="form-group">
       <label for="exampleInputAttribute">Select Attribute</label>
-      <input type="text" id="exampleInputAttribute" placeholder="Attributes">
+      <input type="text" id="exampleInputAttribute" name="exampleInputAttribute" [(ngModel)]="selectedAttributes" placeholder="Attributes">
       <button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Add</button>
     </div>    
     <table>
