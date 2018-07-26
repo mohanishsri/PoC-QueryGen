@@ -4,6 +4,7 @@ import { FormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Router} from '@angular/router';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import {TabsModule} from 'ngx-bootstrap';
 import {ModalModule} from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
@@ -29,10 +30,11 @@ import { AddattributeComponent } from './recipes/createrecipe/addattribute/addat
     BrowserModule,    
     NgxPaginationModule,    
     AngularMultiSelectModule, 
+    TabsModule.forRoot(),
     ModalModule.forRoot(),
     FormsModule,
     HttpModule,   
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(),    
     RouterModule.forRoot([      
       {path:'', component:RecipesComponent},
       { path:'createrecipe/:id/:sp/:rp/:r', component:CreaterecipeComponent },

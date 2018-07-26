@@ -23,6 +23,9 @@ export class AddattributeComponent implements OnInit {
   attributename:string;
   selectedcolname:number;
   selectedcolvalue:number;
+  selectedfnname:string;
+  orandcheckvalue:boolean;
+
   tempid:number=0;
 
   constructor(public bsModalRef: BsModalRef, public _dataService: AttrubtesService) { 
@@ -39,20 +42,31 @@ export class AddattributeComponent implements OnInit {
 
   addattribute()
   {
-     this.tempid=this.tempid+1;
+     this.tempid=this.tempid+1;     
+     
      var s = new AttributeValues();
 
-     s.id = this.tempid;
-     
-     s.columnname = this.ColName.find(item => item.ID == this.selectedcolname).Name;
+     s.id = this.tempid; 
+     var strtempfn = '';     
+     strtempfn=this.selectedfnname.replace('_', this.ColName.find(item => item.ID == this.selectedcolname).Name);
+
+     s.columnname = strtempfn;
      s.columnvalue = this.ColValues.find(item => item.Sub_ID == this.selectedcolvalue).ColValue;
      s.attributename = this.attributename;
-    
+     if(this.orandcheckvalue)
+     {
+        s.orandoperned="OR";
+     }
+     else
+     {
+        s.orandoperned="AND";
+     }     
+
     this.AttributeList.push(s);       
   }
 
   selectvalue(att:AttributeValues)
-  {   
+  { 
     if(this._dataService.attributedata.find(x=>x.id===att.id))
     {
       this._dataService.attributedata.splice(this._dataService.attributedata.indexOf(att),1);
@@ -62,6 +76,18 @@ export class AddattributeComponent implements OnInit {
       this._dataService.attributedata.push(att);
     }  
       
+  }
+
+  selectBadge(e,att:AttributeValues)
+  {   
+    if (e.target.checked)
+    {
+      att.orandoperned = 'OR';
+    }
+    else
+    {
+      att.orandoperned = 'AND';
+    }    
   }
 
   onclose()

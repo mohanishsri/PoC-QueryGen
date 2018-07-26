@@ -1,2 +1,9 @@
 .p {  text-align: center;
     color: red;}
+.table
+{
+    border-collapse:collapse;
+    padding:20px;
+    margin:0;
+    width:100%;
+}

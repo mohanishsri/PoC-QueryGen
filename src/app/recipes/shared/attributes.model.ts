@@ -11,6 +11,7 @@ export class ColumnName {
     attributename:string;
     columnname:string;
     columnvalue:String;
+    orandoperned:string;
 
     constructor() 
     {

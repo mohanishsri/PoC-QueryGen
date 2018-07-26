@@ -1,6 +1,6 @@
 
  <div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
+    <h4 class="modal-title pull-left">Select Attribute</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -10,6 +10,7 @@
       <th>AttributeName</th>
       <th>Column</th>
       <th>Values</th>
+      <th>Funtion</th>
       <tr>
         <td> <input type="text"  name="Specialty" [(ngModel)]="attributename"
           placeholder="Specialty"></td>
@@ -25,6 +26,13 @@
                 <option *ngIf='ColValues == 0' value="0">--Select--</option>  
                 <option *ngFor="let sub of ColValues" value={{sub.Sub_ID}}>{{sub.ColValue}}</option>          
               </select>  
+        </td>
+        <td>
+            <select id="ddlfunctioname" [(ngModel)]="selectedfnname" style="width:100px;">  
+                <option value="--Select--">--Select--</option>  
+                <option value="Left(_,4)">Left(_,4)</option>  
+                <option value="Right(_,4)">Right(_,4)</option>                            
+              </select> 
         </td>
       </tr>
       <tr>
@@ -42,11 +50,13 @@
       <th>Attribute</th>
       <th>Column </th>
       <th>Value</th>
+      <th>OR-AND</th>
         <tr *ngFor="let att of AttributeList | paginate: { itemsPerPage: 3, currentPage: p }">
           <td><input type="checkbox" (change)="selectvalue(att)"> </td>
           <td>{{att.attributename}}</td>
           <td>{{att.columnname}}</td>
-          <td>{{att.columnvalue}}</td>         
+          <td>{{att.columnvalue}}</td>
+          <td><input type="checkbox" id="chkorand" name="chkorand" (change)="selectBadge($event, att)"> </td>         
         </tr>  
         <pagination-controls (pageChange)="p = $event"></pagination-controls> 
       </table>        

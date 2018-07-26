@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalService} from 'ngx-bootstrap';
-import {BsModalRef} from 'ngx-bootstrap';
+import {BsModalRef, TabsetComponent} from 'ngx-bootstrap';
 
 import { Recipe } from '../shared/recipe.model';
 import {AttributeValues} from '../shared/attributes.model';
@@ -29,6 +29,8 @@ dropdownList = [];
 selectedItems = [];
 dropdownSettings = {};
 selectedAttributes:string='';
+
+@ViewChild('staticTabs') staticTabs: TabsetComponent;
 
   constructor(private _route:ActivatedRoute, private _routeback:Router, private modalService: BsModalService) { }
 
@@ -74,6 +76,10 @@ this.dropdownSettings = {
         }; 
   }
 
+  selectTab(tab_id: number) {
+    this.staticTabs.tabs[tab_id].active = true;
+  }
+
   backmove()
   {
     this._routeback.navigate(['']);
@@ -104,7 +110,7 @@ openModalWithComponent() {
     ],
     title: 'Modal with component'
   };  
-  this.bsModalRef = this.modalService.show(AddattributeComponent, {initialState});
+  this.bsModalRef = this.modalService.show(AddattributeComponent, {class: 'modal-lg'});
 
   this.bsModalRef.content.triggerfromModel.subscribe(result => {
        this.oncloseModel(result);
@@ -114,7 +120,9 @@ openModalWithComponent() {
 }
 
 oncloseModel(result)
-{
+{ 
+  this.selectedAttributes = '';
+
   this.attributevaluefromModel = result as AttributeValues[];
   
   for(let i=0; i<this.attributevaluefromModel.length;i++)
@@ -122,14 +130,15 @@ oncloseModel(result)
     if(this.selectedAttributes!='')
     {      
       this.selectedAttributes = this.selectedAttributes + ', ' + this.attributevaluefromModel[i].attributename;
-      this.wherestring = this.wherestring + ' or ' + this.attributevaluefromModel[i].columnname + '=' + 
+      this.wherestring = this.wherestring + ' ' + this.attributevaluefromModel[i].orandoperned + ' ' + this.attributevaluefromModel[i].columnname + '=' + 
                           this.attributevaluefromModel[i].columnvalue;
     }
     else
     {
       this.selectedAttributes = this.attributevaluefromModel[i].attributename;
       this.wherestring  = " Where " + this.attributevaluefromModel[i].columnname + '=' + 
-                           this.attributevaluefromModel[i].columnvalue;
+                           this.attributevaluefromModel[i].columnvalue +
+                           ' ' + this.attributevaluefromModel[i].orandoperned + ' ' ;
     }
   }  
 }
