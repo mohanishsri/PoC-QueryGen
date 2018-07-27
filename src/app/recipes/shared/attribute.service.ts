@@ -13,6 +13,7 @@ attributedata :AttributeValues[]=[];
 tablenames:string[]=[];
 colnames:ColumnName[]=[];
 colvalues:ColumnName[]=[];
+colnameforcreate:string[];
 
   constructor(private http : Http) { }
 
@@ -35,6 +36,15 @@ colvalues:ColumnName[]=[];
       return data.json() as ColumnName[];
     }).toPromise().then(x => {
       this.colnames = x;
+    })    
+  }
+ // this get methid call from create component
+  getColNamesForCreate(tablename:string){    
+    this.http.get('http://localhost:28750/api/attribute/search?tablename='+ tablename + '&ID='+-1)
+    .map((data : Response) =>{
+      return data.json() as string[];
+    }).toPromise().then(x => {
+      this.colnameforcreate = x;
     })    
   }
 

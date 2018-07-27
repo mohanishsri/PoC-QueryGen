@@ -21,7 +21,7 @@
                         <td>
                             <div class="col-xs-2">
                                 <label for="exampleInputEmail1">Select Table</label>
-                                <input type="text" class="form-control" name="exampleInputTable" id="exampleInputTable" [(ngModel)]="inputtable" placeholder="Enter Table Name">      
+                                <input type="text" class="form-control" readonly name="exampleInputTable" id="exampleInputTable" [(ngModel)]="inputtable" placeholder="GIRFT_NCIP_RnD_BaseComponent">      
                           </div> 
                         </td>                      
                       </tr>
@@ -84,7 +84,7 @@
           </tr>
             <tr>
                 <td>
-                    <button type="button" class="btn btn-primary">Compile</button>
+                    <button type="button" class="btn btn-primary" (click)="savedata()">Save</button>
                     <button type="button" class="btn btn-primary">Execute</button>
                 </td>                         
             </tr>            

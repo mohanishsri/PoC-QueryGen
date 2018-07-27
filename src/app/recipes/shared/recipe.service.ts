@@ -21,6 +21,14 @@ export class RecipeService {
     return this.http.post('http://localhost:28750/api/recipe/Create',body,requestOptions).map(x => x.json());
   }
 
+  saveRecipe(rec : Recipe[]){
+    console.log('hiii');
+    var body = JSON.stringify(rec);    
+    var headerOptions = new Headers({'Content-Type':'application/json'});
+    var requestOptions = new RequestOptions({method : RequestMethod.Post,headers : headerOptions});
+    return this.http.post('http://localhost:28750/api/recipe/Save',body,requestOptions).map(x => x.json());
+  }
+
   putRecipe(id:Number, recobj:Recipe) {    
     var body = JSON.stringify(recobj);    
     var headerOptions = new Headers({ 'Content-Type': 'application/json' });
