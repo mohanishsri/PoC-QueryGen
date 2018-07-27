@@ -15,16 +15,16 @@
         <td> <input type="text"  name="Specialty" [(ngModel)]="attributename"
           placeholder="Specialty"></td>
         <td>
-            <select id="ddlcolumnname" (change)="onSelect($event.target.value)" [(ngModel)]="selectedcolname" style="width:100px;">  
+            <select id="ddlcolumnname" (change)="onSelect($event)" [(ngModel)]="selectedcolname" style="width:100px;">  
                 <option value="0">--Select--</option>  
-                <option *ngFor="let colname of ColName" 
+                <option *ngFor="let colname of this._dataService.colnames" 
                 value={{colname.ID}}>{{colname.Name}}</option>           
               </select> 
         </td>
         <td>
             <select id="ddlcolumnvalue" [(ngModel)]="selectedcolvalue" style="width:100px;">  
-                <option *ngIf='ColValues == 0' value="0">--Select--</option>  
-                <option *ngFor="let sub of ColValues" value={{sub.Sub_ID}}>{{sub.ColValue}}</option>          
+                <option *ngIf='this._dataService.colvalues == 0' value="0">--Select--</option>  
+                <option *ngFor="let sub of this._dataService.colvalues" value={{sub.ID}}>{{sub.Name}}</option>          
               </select>  
         </td>
         <td>

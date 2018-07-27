@@ -39,13 +39,14 @@ export class RecipeService {
   }
 
   getSearchRecipe(rec:Recipe){      
-    console.log("inside search");
+    console.log('hi rec');    
     this.http.get('http://localhost:28750/api/recipe/Search?searchvalues='+ rec.Recipe + '|' + rec.Recipe_Parent + '|' + rec.Specialty +'&id=0')
     .map((data : Response) =>{
       return data.json() as Recipe[];
     }).toPromise().then(x => {
       this.recipeList = x;
     })
+    console.log(this.recipeList);
   }
 
   deleteRecipe(id: number) {

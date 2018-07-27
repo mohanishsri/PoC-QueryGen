@@ -29,30 +29,38 @@ export class AddattributeComponent implements OnInit {
   tempid:number=0;
 
   constructor(public bsModalRef: BsModalRef, public _dataService: AttrubtesService) { 
-    this.ColName = this._dataService.getColumnName();
+    this._dataService.getColNames('GIRFT_NCIP_RnD_BaseComponent');  
   }
 
   ngOnInit() {
+    this.ColName = this._dataService.getColumnName();
+     
   }
 
-  onSelect(ID) {       
-    this.ColValues = this._dataService.getColumnValues().filter((item)=> item.ID == ID);    
+  onSelect(e) {  
+   
+    this._dataService.getColValues(e.target.value);
+    this.ColValues = this._dataService.getColumnValues().filter((item)=> item.ID == e.target.value);   
    
   } 
 
   addattribute()
   {
-     this.tempid=this.tempid+1;     
+
+    console.log(this.selectedcolvalue);
+    this.tempid=this.tempid+1;     
      
-     var s = new AttributeValues();
+    var s = new AttributeValues();
 
-     s.id = this.tempid; 
-     var strtempfn = '';     
-     strtempfn=this.selectedfnname.replace('_', this.ColName.find(item => item.ID == this.selectedcolname).Name);
+    s.id = this.tempid; 
+    var strtempfn = '';
 
-     s.columnname = strtempfn;
-     s.columnvalue = this.ColValues.find(item => item.Sub_ID == this.selectedcolvalue).ColValue;
-     s.attributename = this.attributename;
+    strtempfn=this.selectedfnname.replace('_', this._dataService.colnames.find(item => item.ID == this.selectedcolname).Name);
+
+    s.columnname = strtempfn;
+    s.columnvalue = this._dataService.colvalues.find(item => item.ID == this.selectedcolvalue).Name;
+    s.attributename = this.attributename;
+
      if(this.orandcheckvalue)
      {
         s.orandoperned="OR";
@@ -62,7 +70,7 @@ export class AddattributeComponent implements OnInit {
         s.orandoperned="AND";
      }     
 
-    this.AttributeList.push(s);       
+    this.AttributeList.push(s); 
   }
 
   selectvalue(att:AttributeValues)

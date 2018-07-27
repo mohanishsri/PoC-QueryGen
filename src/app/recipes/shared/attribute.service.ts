@@ -8,9 +8,48 @@ import {ColumnName, ColumnValue, AttributeValues} from'./attributes.model';
 
 @Injectable()
 export class AttrubtesService {
+localtablename:string;
 attributedata :AttributeValues[]=[];
+tablenames:string[]=[];
+colnames:ColumnName[]=[];
+colvalues:ColumnName[]=[];
 
   constructor(private http : Http) { }
+
+
+  // get method to reterive tablenames
+  getTableNames(){
+    this.http.get('http://localhost:28750/api/attribute/Index')
+    .map((data : Response) =>{
+      return data.json() as string[];
+    }).toPromise().then(x => {
+      this.tablenames = x;
+    })
+  }
+
+  // get method to reterive tablenames
+  getColNames(tablename:string){
+    this.localtablename = tablename;
+    this.http.get('http://localhost:28750/api/attribute/search?tablename='+ tablename + '&ID='+-1)
+    .map((data : Response) =>{
+      return data.json() as ColumnName[];
+    }).toPromise().then(x => {
+      this.colnames = x;
+    })    
+  }
+
+  // get method to reterive tablenames
+  getColValues(ID:number){
+    console.log('hi');
+    this.http.get('http://localhost:28750/api/attribute/search?tablename='+ this.localtablename + '&ID=' + ID)
+    .map((data : Response) =>{
+      return data.json() as ColumnName[];
+    }).toPromise().then(x => {
+      this.colvalues = x;
+    })
+    console.log(this.colvalues);
+  }
+
   getColumnName() {  
     return [  
      new ColumnName(1, 'DIAG_01_Derived'),  
