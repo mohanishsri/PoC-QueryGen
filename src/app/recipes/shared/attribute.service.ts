@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-import {ColumnName, ColumnValue, AttributeValues} from'./attributes.model';
+import {ColumnName, ColumnValue, AttributeValues, ColNameForCreate} from'./attributes.model';
 
 @Injectable()
 export class AttrubtesService {
@@ -13,7 +13,7 @@ attributedata :AttributeValues[]=[];
 tablenames:string[]=[];
 colnames:ColumnName[]=[];
 colvalues:ColumnName[]=[];
-colnameforcreate:string[];
+colnameforcreate:ColumnName[]=[];
 
   constructor(private http : Http) { }
 
@@ -42,7 +42,7 @@ colnameforcreate:string[];
   getColNamesForCreate(tablename:string){    
     this.http.get('http://localhost:28750/api/attribute/search?tablename='+ tablename + '&ID='+-1)
     .map((data : Response) =>{
-      return data.json() as string[];
+      return data.json() as ColumnName[];
     }).toPromise().then(x => {
       this.colnameforcreate = x;
     })    
