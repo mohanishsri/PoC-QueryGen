@@ -15,6 +15,8 @@ import { ToastrModule } from 'ngx-toastr';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { CreaterecipeComponent } from './recipes/createrecipe/createrecipe.component';
 import { AddattributeComponent } from './recipes/createrecipe/addattribute/addattribute.component';
+import { AddrecipesComponent } from './recipes/addrecipes/addrecipes.component';
+import { NewrecipeComponent } from './recipes/addrecipes/newrecipe/newrecipe.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { AddattributeComponent } from './recipes/createrecipe/addattribute/addat
     RecipeComponent,
     RecipeListComponent,
     CreaterecipeComponent,
-    AddattributeComponent        
+    AddattributeComponent,
+    AddrecipesComponent,
+    NewrecipeComponent        
   ],
   imports: [    
     BrowserModule,    
@@ -38,6 +42,8 @@ import { AddattributeComponent } from './recipes/createrecipe/addattribute/addat
     RouterModule.forRoot([      
       {path:'', component:RecipesComponent},
       { path:'createrecipe/:id/:sp/:rp/:r', component:CreaterecipeComponent },
+      { path:'addrecipe/:id/:sp/:rp/:r', component:AddrecipesComponent },
+      { path:'popup', component:NewrecipeComponent },
       { path:'model', component:AddattributeComponent }
     ])       
   ],

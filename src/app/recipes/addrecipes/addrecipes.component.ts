@@ -1,0 +1,213 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BsModalService} from 'ngx-bootstrap';
+import {BsModalRef, TabsetComponent,TabDirective} from 'ngx-bootstrap';
+import { ToastrService } from 'ngx-toastr'
+
+import{Addrecipe} from '../shared/addrecipe.model';
+import {NewrecipeComponent} from './newrecipe/newrecipe.component';
+
+@Component({
+  selector: 'app-addrecipes',
+  templateUrl: './addrecipes.component.html',
+  styleUrls: ['./addrecipes.component.css']
+})
+export class AddrecipesComponent implements OnInit {
+
+  @ViewChild('staticTabs') staticTabs: TabsetComponent;
+  bsModalRef: BsModalRef;
+  creatednewattrname:string;
+  dropdownList = [];  
+  selectedItems = [];
+  dropdownSettings = {};
+  inputtable:string='GIRFT_NCIP_RnD_BaseComponent';
+  dropdownvalues = [];
+  private fieldArray: Array<Addrecipe> = [];
+  private newAttribute: Addrecipe = new Addrecipe();
+  private rectosave:Addrecipe[]=[];
+  query:string;
+
+  constructor(private modalService: BsModalService, private _routeback:Router) { }
+
+  ngOnInit() {
+    this.dropdownvalues = 
+    [
+      "z001",
+      "z002",
+      "z003",
+      "z004"
+    ]
+    this.dropdownList = [
+      {"id":1,"itemName":"AGEGROUP_Derived"},
+      {"id":2,"itemName":"DIAG_01_Derived"},
+      {"id":3,"itemName":"DIAG_02_Derived"},
+      {"id":4,"itemName":"DIAG_03_Derived"},
+      {"id":5,"itemName":"DIAG_04_Derived"},
+      {"id":6,"itemName":"DIAG_05_Derived"},
+      {"id":7,"itemName":"DIAG_06_Derived"},
+      {"id":8,"itemName":"DIAG_07_Derived"},
+      {"id":9,"itemName":"DIAG_08_Derived"},
+      {"id":10,"itemName":"DIAG_09_Derived"},
+      {"id":10,"itemName":"DIAG_10_Derived"},
+      {"id":10,"itemName":"DIAG_11_Derived"},
+      {"id":10,"itemName":"DIAG_09_Derived"},
+      {"id":10,"itemName":"DIAG_09_Derived"},
+      {"id":10,"itemName":"DIAG_12_Derived"},
+      {"id":10,"itemName":"OPERTN_01_Derived"},
+      {"id":10,"itemName":"OPERTN_02_Derived"},
+      {"id":10,"itemName":"OPERTN_03_Derived"},
+      {"id":10,"itemName":"OPERTN_04_Derived"},
+      {"id":10,"itemName":"OPERTN_05_Derived"},
+      {"id":10,"itemName":"OPERTN_06_Derived"},
+      {"id":10,"itemName":"OPERTN_07_Derived"},
+      {"id":10,"itemName":"OPERTN_08_Derived"},
+      {"id":10,"itemName":"OPERTN_09_Derived"},
+      {"id":10,"itemName":"OPERTN_10_Derived"},
+      {"id":10,"itemName":"OPERTN_11_Derived"},
+      {"id":10,"itemName":"OPERTN_12_Derived"},
+      {"id":10,"itemName":"OPERTN_13_Derived"},
+      {"id":10,"itemName":"OPERTN_14_Derived"},
+      {"id":10,"itemName":"OPERTN_15_Derived"},
+      {"id":10,"itemName":"OPERTN_16_Derived"},
+      {"id":10,"itemName":"OPERTN_17_Derived"},
+      {"id":10,"itemName":"OPERTN_18_Derived"},
+      {"id":10,"itemName":"OPERTN_19_Derived"},
+      {"id":10,"itemName":"OPERTN_20_Derived"},
+      {"id":10,"itemName":"OPERTN_21_Derived"},
+      {"id":10,"itemName":"OPERTN_22_Derived"},
+      {"id":10,"itemName":"OPERTN_23_Derived"},
+      {"id":10,"itemName":"OPERTN_24_Derived"},
+      
+
+    ];
+    
+this.dropdownSettings = { 
+    singleSelection: false, 
+    text:"Select Columns",
+    selectAllText:'Select All',
+    unSelectAllText:'UnSelect All',
+    enableSearchFilter: true,
+    classes:"myclass custom-class"
+  }; 
+
+    this.staticTabs.tabs[1].active = true;
+  }
+
+
+addFieldValue() {
+    this.fieldArray.push(this.newAttribute);
+    this.rectosave.push(this.newAttribute);// for save
+
+    this.newAttribute = new Addrecipe();
+}
+
+deleteFieldValue(index) {
+  this.rectosave.splice(index,1) ;
+    this.fieldArray.splice(index, 1);
+}
+
+onSelect(e){
+  this.openModalWithComponent(e.target.value);
+}
+
+
+onItemSelect(item:any){
+  console.log(item);
+  console.log(this.selectedItems);
+}
+OnItemDeSelect(item:any){
+  console.log(item);
+  console.log(this.selectedItems);
+}
+onSelectAll(items: any){
+  console.log(items);
+}
+onDeSelectAll(items: any){
+  console.log(items);
+}
+
+
+openModalWithComponent(value:string) {
+  if(value=="0")
+  {
+    this.bsModalRef = this.modalService.show(NewrecipeComponent, {class: 'modal-lg'});
+
+    this.bsModalRef.content.triggerfromModel.subscribe(result => {
+        this.oncloseModel(result);
+        })
+        
+    this.bsModalRef.content.closeBtnName = 'Close';
+  }
+}
+
+oncloseModel(result)
+{
+  this.creatednewattrname = result as string;
+  this.dropdownvalues.splice(0,0,this.creatednewattrname);  
+}
+
+backmove()
+  {
+    this._routeback.navigate(['']);
+  }
+
+genquery()
+{  
+  this.query='';
+
+  let str:string='';      
+    
+  for(let i=0; i<this.selectedItems.length; i++){
+   
+    if(str!='')
+    {
+      str = str + ', ' + this.selectedItems[i].itemName + ' ';
+    }
+    else
+    {
+      str = this.selectedItems[i].itemName;
+    }
+ } 
+
+ console.log(this.inputtable);
+  var str1 = new String( "Select " + str ); 
+  var str2 = new String( "From dbo." + this.inputtable); 
+
+  var strfinal = str1.concat(str2.toString()); 
+
+  console.log(strfinal);
+
+  var strwhere = '';
+  
+  for(let i=0;i<this.rectosave.length;i++)
+  {
+    console.log('11111');
+    console.log(this.rectosave[i].AndOr);
+
+    var orand = this.rectosave[i].AndOr!=null?this.rectosave[i].AndOr:"";
+    var colname = this.rectosave[i].FunctionAttribute!=null?
+                  this.rectosave[i].FunctionAttribute.replace("_", this.rectosave[i].Attribute):this.rectosave[i].Attribute;
+    
+
+    if(strwhere=='')
+    {
+      strwhere = " Where " + colname + ' ' + 
+                            this.rectosave[i].Condition + ' ' +
+                            "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
+                          "'" + this.rectosave[i].Codegroup +"' ) " + orand + " "; 
+    }
+    else
+    {
+      strwhere = strwhere + colname + ' ' + 
+                            this.rectosave[i].Condition + ' ' +
+                            "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
+                            "'"+ this.rectosave[i].Codegroup +"')" + orand;
+    }
+  }
+  console.log(strwhere);
+  this.query = strfinal.concat(strwhere.toString());      
+  console.log(strfinal);
+
+}
+
+}

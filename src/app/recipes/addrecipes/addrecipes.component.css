@@ -1,0 +1,27 @@
+#body{
+    padding: 15px;
+    width: 100%;
+    font-size: 16px;  
+  }
+  
+  .header-container {
+    border: solid 1px black;
+    text-align: center;  
+    height: 3em;
+    margin-bottom: 1em;    
+  }  
+  
+.body-container {
+    border: solid 1px black;
+    padding: 20px;    
+    height: 300px;
+    overflow-y: scroll;
+  }
+  
+
+  .footer-container {
+    text-align: center; 
+    width: 100%;
+    max-height: 200px;  
+    
+  }

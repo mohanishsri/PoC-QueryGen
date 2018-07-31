@@ -38,7 +38,8 @@ export class RecipeListComponent implements OnInit {
     }
   }
 
-  moveon(rec: Recipe){    
-   this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
+  moveon(rec: Recipe){        
+    this.router.navigate(['addrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
+    //this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
  }
 }
