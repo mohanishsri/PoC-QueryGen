@@ -30,8 +30,7 @@
                       <td colspan="2">Priority</td>
                       <td colspan="2">Function</td>
                       <td colspan="2">Column</td>
-                      <td colspan="2">Operator</td>
-                      <td colspan="2">Function</td>
+                      <td colspan="2">Operator</td>                      
                       <td colspan="2">Value</td>
                       <td colspan="2">OrAnd</td>
                   </tr>             
@@ -48,10 +47,7 @@
                       </td>
                       <td colspan="2">
                           <input [(ngModel)]="field.Condition"  type="text" name="{{field.Condition}}" />
-                      </td>
-                      <td colspan="2">
-                          <input [(ngModel)]="field.FunctionCodegroup"  type="text" name="{{field.FunctionCodegroup}}" />
-                      </td>
+                      </td>                     
                       <td colspan="2">
                           <input [(ngModel)]="field.Codegroup" type="text" name="{{field.Codegroup}}" />
                       </td>
@@ -86,14 +82,7 @@
                                     <option value="in">in</option>  
                                     <option value="=">=</option>                            
                                   </select>                          
-                      </td>
-                      <td colspan="2">
-                            <select id="ddlopertorname" name="ddlopertorname" [(ngModel)]="newAttribute.FunctionCodegroup" >  
-                                    <option value="--Select--">--Select--</option>  
-                                    <option value="Left(_,4)">Left(_,4)</option>  
-                                    <option value="Right(_,4)">Right(_,4)</option>                            
-                                  </select>
-                      </td>
+                      </td>                     
                       <td colspan="2">
                             <select select id="ddlcolumnvalue" (change)="onSelect($event)" name="ddlcolumnvalue" [(ngModel)]="newAttribute.Codegroup">  
                                     <option value="0">--Select New--</option>

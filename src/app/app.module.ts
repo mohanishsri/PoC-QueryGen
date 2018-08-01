@@ -17,6 +17,7 @@ import { CreaterecipeComponent } from './recipes/createrecipe/createrecipe.compo
 import { AddattributeComponent } from './recipes/createrecipe/addattribute/addattribute.component';
 import { AddrecipesComponent } from './recipes/addrecipes/addrecipes.component';
 import { NewrecipeComponent } from './recipes/addrecipes/newrecipe/newrecipe.component';
+import { RecipedetailsService } from './recipes/shared/recipedetails.service';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { NewrecipeComponent } from './recipes/addrecipes/newrecipe/newrecipe.com
       { path:'model', component:AddattributeComponent }
     ])       
   ],
-  providers: [],
+  providers: [RecipedetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

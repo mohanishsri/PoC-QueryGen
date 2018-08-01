@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr'
 
 import{Addrecipe} from '../shared/addrecipe.model';
 import {NewrecipeComponent} from './newrecipe/newrecipe.component';
+import {RecipedetailsService} from '../shared/recipedetails.service';
 
 @Component({
   selector: 'app-addrecipes',
@@ -25,11 +26,34 @@ export class AddrecipesComponent implements OnInit {
   private fieldArray: Array<Addrecipe> = [];
   private newAttribute: Addrecipe = new Addrecipe();
   private rectosave:Addrecipe[]=[];
+  id:number;
+  speciality:string;
+  recipeparent:string;
+  recipename:string; 
   query:string;
 
-  constructor(private modalService: BsModalService, private _routeback:Router) { }
+  constructor(private _route:ActivatedRoute,private modalService: BsModalService, 
+          private toastr: ToastrService, private recService: RecipedetailsService, private _routeback:Router) { }
 
   ngOnInit() {
+
+    this._route.paramMap.subscribe(params => {
+      this.id=+params.get('id');      
+      });   
+      
+      this._route.paramMap.subscribe(params => {
+        this.speciality=params.get('sp');       
+        });
+        
+      this._route.paramMap.subscribe(params => {
+          this.recipeparent=params.get('rp');   
+         
+          });
+  
+      this._route.paramMap.subscribe(params => {
+         this.recipename=params.get('r');
+            });  
+
     this.dropdownvalues = 
     [
       "z001",
@@ -174,16 +198,13 @@ genquery()
   var str2 = new String( "From dbo." + this.inputtable); 
 
   var strfinal = str1.concat(str2.toString()); 
-
-  console.log(strfinal);
+  
 
   var strwhere = '';
   
   for(let i=0;i<this.rectosave.length;i++)
-  {
-    console.log('11111');
-    console.log(this.rectosave[i].AndOr);
-
+  {    
+    
     var orand = this.rectosave[i].AndOr!=null?this.rectosave[i].AndOr:"";
     var colname = this.rectosave[i].FunctionAttribute!=null?
                   this.rectosave[i].FunctionAttribute.replace("_", this.rectosave[i].Attribute):this.rectosave[i].Attribute;
@@ -207,7 +228,24 @@ genquery()
   console.log(strwhere);
   this.query = strfinal.concat(strwhere.toString());      
   console.log(strfinal);
+}
 
+savedata()
+{
+
+  for(let i=0; i<this.rectosave.length;i++)
+  {
+    this.rectosave[i].RecipeId = this.id;
+    this.rectosave[i].Specialty = this.speciality;
+    this.rectosave[i].Recipe_Parent = this.recipeparent;
+    this.rectosave[i].Recipe = this.recipename;
+  }
+
+  this.recService.saveRecipe(this.rectosave).subscribe(data => {    
+  });;
+
+  this.toastr.success('New Record Added Succcessfully', 'Recipe Saved');
+        
 }
 
 }
