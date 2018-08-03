@@ -9,6 +9,9 @@ import {Addrecipe} from './addrecipe.model';
 @Injectable()
 export class RecipedetailsService {
   recipeList : Addrecipe[];
+  query:string;
+  selectedcolumn = [];
+  
   
   constructor(private http : Http) { }
 

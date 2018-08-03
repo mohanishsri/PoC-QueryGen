@@ -18,6 +18,9 @@ import { AddattributeComponent } from './recipes/createrecipe/addattribute/addat
 import { AddrecipesComponent } from './recipes/addrecipes/addrecipes.component';
 import { NewrecipeComponent } from './recipes/addrecipes/newrecipe/newrecipe.component';
 import { RecipedetailsService } from './recipes/shared/recipedetails.service';
+import { DislpayresultComponent } from './recipes/addrecipes/dislpayresult/dislpayresult.component';
+import { DyndisplayresultComponent } from './recipes/addrecipes/dyndisplayresult/dyndisplayresult.component';
+import { DisplayresultService } from './recipes/shared/displayresult.service';
 
 
 @NgModule({
@@ -29,7 +32,9 @@ import { RecipedetailsService } from './recipes/shared/recipedetails.service';
     CreaterecipeComponent,
     AddattributeComponent,
     AddrecipesComponent,
-    NewrecipeComponent        
+    NewrecipeComponent,
+    DislpayresultComponent,
+    DyndisplayresultComponent        
   ],
   imports: [    
     BrowserModule,    
@@ -44,11 +49,12 @@ import { RecipedetailsService } from './recipes/shared/recipedetails.service';
       {path:'', component:RecipesComponent},
       { path:'createrecipe/:id/:sp/:rp/:r', component:CreaterecipeComponent },
       { path:'addrecipe/:id/:sp/:rp/:r', component:AddrecipesComponent },
+      { path:'displayresult/:id', component:DislpayresultComponent },
       { path:'popup', component:NewrecipeComponent },
       { path:'model', component:AddattributeComponent }
     ])       
   ],
-  providers: [RecipedetailsService],
+  providers: [RecipedetailsService, DisplayresultService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

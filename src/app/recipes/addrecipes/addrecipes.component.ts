@@ -33,7 +33,8 @@ export class AddrecipesComponent implements OnInit {
   query:string;
 
   constructor(private _route:ActivatedRoute,private modalService: BsModalService, 
-          private toastr: ToastrService, private recService: RecipedetailsService, private _routeback:Router) { }
+          private toastr: ToastrService, public recService: RecipedetailsService, private _routeback:Router
+          , private router : Router) { }
 
   ngOnInit() {
 
@@ -56,12 +57,17 @@ export class AddrecipesComponent implements OnInit {
 
     this.dropdownvalues = 
     [
-      "z001",
-      "z002",
-      "z003",
-      "z004"
+      "Tonsilitis1",
+      "Tonsilitis2",
+      "Tonsilitis3",
+      "Tonsilitis4",
+      "Tonsilitis5",
+      "Tonsilitis6",
+      "Tonsilitis7",
+      "HNCancer",
+     
     ]
-    this.dropdownList = [
+    this.dropdownList =  [
       {"id":1,"itemName":"AGEGROUP_Derived"},
       {"id":2,"itemName":"DIAG_01_Derived"},
       {"id":3,"itemName":"DIAG_02_Derived"},
@@ -73,9 +79,7 @@ export class AddrecipesComponent implements OnInit {
       {"id":9,"itemName":"DIAG_08_Derived"},
       {"id":10,"itemName":"DIAG_09_Derived"},
       {"id":10,"itemName":"DIAG_10_Derived"},
-      {"id":10,"itemName":"DIAG_11_Derived"},
-      {"id":10,"itemName":"DIAG_09_Derived"},
-      {"id":10,"itemName":"DIAG_09_Derived"},
+      {"id":10,"itemName":"DIAG_11_Derived"},     
       {"id":10,"itemName":"DIAG_12_Derived"},
       {"id":10,"itemName":"OPERTN_01_Derived"},
       {"id":10,"itemName":"OPERTN_02_Derived"},
@@ -104,6 +108,7 @@ export class AddrecipesComponent implements OnInit {
       
 
     ];
+    
     
 this.dropdownSettings = { 
     singleSelection: false, 
@@ -206,28 +211,31 @@ genquery()
   {    
     
     var orand = this.rectosave[i].AndOr!=null?this.rectosave[i].AndOr:"";
+
     var colname = this.rectosave[i].FunctionAttribute!=null?
                   this.rectosave[i].FunctionAttribute.replace("_", this.rectosave[i].Attribute):this.rectosave[i].Attribute;
-    
+
+    this.rectosave[i].PreLogicalOperator = "(";
+    this.rectosave[i].PostLogicalOperator = ")";
 
     if(strwhere=='')
     {
-      strwhere = " Where " + colname + ' ' + 
+      strwhere = " Where " + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
                             this.rectosave[i].Condition + ' ' +
                             "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
-                          "'" + this.rectosave[i].Codegroup +"' ) " + orand + " "; 
+                          "'" + this.rectosave[i].Codegroup +"' ) "+ this.rectosave[i].PostLogicalOperator + orand + " "; 
     }
     else
     {
-      strwhere = strwhere + colname + ' ' + 
+      strwhere = strwhere + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
                             this.rectosave[i].Condition + ' ' +
                             "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
-                            "'"+ this.rectosave[i].Codegroup +"')" + orand;
+                            "'"+ this.rectosave[i].Codegroup +"')"+ this.rectosave[i].PostLogicalOperator + orand;
     }
   }
   console.log(strwhere);
   this.query = strfinal.concat(strwhere.toString());      
-  console.log(strfinal);
+  this.recService.query = this.query;
 }
 
 savedata()
@@ -246,6 +254,12 @@ savedata()
 
   this.toastr.success('New Record Added Succcessfully', 'Recipe Saved');
         
+}
+
+moveon(){    
+  this.recService.selectedcolumn = this.selectedItems; 
+  this.router.navigate(['displayresult', this.id]);
+  //this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
 }
 
 }
