@@ -200,7 +200,7 @@ genquery()
 
  console.log(this.inputtable);
   var str1 = new String( "Select " + str ); 
-  var str2 = new String( "From dbo." + this.inputtable); 
+  var str2 = new String( " From dbo." + this.inputtable); 
 
   var strfinal = str1.concat(str2.toString()); 
   
@@ -232,8 +232,7 @@ genquery()
                             "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
                             "'"+ this.rectosave[i].Codegroup +"')"+ this.rectosave[i].PostLogicalOperator + orand;
     }
-  }
-  console.log(strwhere);
+  } 
   this.query = strfinal.concat(strwhere.toString());      
   this.recService.query = this.query;
 }

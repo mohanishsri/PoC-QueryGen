@@ -1,12 +1,15 @@
-<table>
-    <thead>
+<button type="button" class="btn btn-primary" (click)="moveon()">Back</button>
+<button type="button" class="btn btn-primary" (click)="moveon()">Home</button>
+
+<table style="border: 1px solid black">  
+    <thead style="border: 1px solid black">
       <tr class="table-head">
-        <th *ngFor="let tableHead of tableHeads">{{tableHead}}</th>
+        <th style="border: 1px solid black" *ngFor="let tableHead of tableHeads">{{tableHead}}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let tableData of tableDatas">
-        <td *ngFor="let colName of tableColNameGenerated"> {{tableData[colName]}}</td>
+      <tr *ngFor="let tableData of disService.dislpayDataList">
+        <td style="border: 1px solid black" *ngFor="let tableHead of tableHeads"> {{tableData[tableHead]}}</td>
       </tr>
     </tbody>
   </table>

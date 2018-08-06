@@ -16,7 +16,7 @@ import {Displaydata, QueryClass} from '../../shared/displaydata.model';
 export class DislpayresultComponent implements OnInit {
 // fetch or create an Object of UserDetails type and pass it to dynamic-table
 //private userDetails: Array<UserDetails>;
-private userDetails: Array<Displaydata>;
+private userDetails: Array<Displaydata>;// = new Array<any>();// Displaydata[]=[]//Array<Displaydata>;
 // required to provide the table header, you can call an api or hard code the column name.
 private tableHead: Array<String>;  
 // optional, you can hard code the property name or just send the data of an object and dynamic-table component will figure out.
@@ -33,7 +33,7 @@ private tableColName: Array<String>;
         this.tableHead.push(this.recService.selectedcolumn[i].itemName);
         this.tableColName.push(this.recService.selectedcolumn[i].itemName);
     }    
-    
+
      this.userDetails = new Array<Displaydata>();      
       //this.userDetails = new Array<UserDetails>();      
    }
@@ -46,15 +46,10 @@ private tableColName: Array<String>;
 
      
       this.disService.postRecipe(this.recService.query)
-      .subscribe(data => {        
-        this.disService.getResultsToDisplay();
-        this.toastr.success('New Record Added Succcessfully', 'Recipe Register');
-      })
-
-      console.log('this is in display component');
-      console.log(this.disService.dislpayDataList);
-
-      this.userDetails = this.disService.dislpayDataList;
+      .subscribe(data => { 
+        this.disService.getResultsToDisplay();           
+      })                 
+     
 
     //this.userDetails.push(new UserDetails('Apple', 18, 'Male'));
      //this.userDetails.push(new UserDetails('Banana', 24, 'Female'));

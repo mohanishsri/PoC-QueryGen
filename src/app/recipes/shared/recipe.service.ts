@@ -51,8 +51,7 @@ export class RecipeService {
       return data.json() as Recipe[];
     }).toPromise().then(x => {
       this.recipeList = x;
-    })
-    console.log(this.recipeList);
+    })    
   }
 
   deleteRecipe(id: number) {

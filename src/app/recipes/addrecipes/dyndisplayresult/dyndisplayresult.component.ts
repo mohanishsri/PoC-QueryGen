@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import {DisplayresultService} from '../../shared/displayresult.service';
+import { Displaydata } from '../../shared/displaydata.model';
 
 @Component({
   selector: 'app-dyndisplayresult',
@@ -8,15 +10,16 @@ import { Component, OnInit, Input, Output, OnChanges, SimpleChanges } from '@ang
 export class DyndisplayresultComponent implements OnInit {
 
   @Input() tableHeads: Array<String> = new Array<String>();
-  @Input() tableDatas: Array<any> = new Array<any>();
+  @Input() tableDatas: Array<Displaydata> = new Array<Displaydata>();
   @Input() tableColName: Array<String> = new Array<String>();
   private tableColNameGenerated: Array<String> = new Array<String>();
   private isTableColNameSet: Boolean = false;
 
-  constructor() { }
+  constructor(public disService:DisplayresultService) { }
 
-  ngOnInit() { 
-  
+  ngOnInit() {    
+    console.log('from component');
+    console.log(this.tableDatas);
   } 
 
   ngOnChanges(changes: SimpleChanges) {
@@ -65,5 +68,5 @@ export class DyndisplayresultComponent implements OnInit {
   private getKeys(value: any): Array<String> {
     return Object.keys(value);
   }
-
+ 
 }

@@ -10,7 +10,7 @@ import {Displaydata, QueryClass} from './displaydata.model';
 @Injectable()
 export class DisplayresultService {
   displaydata:Displaydata;
-  dislpayDataList : Displaydata[];
+  dislpayDataList : Array<Displaydata> = new Array<Displaydata>();
   constructor(private http : Http) { }
 
   postRecipe(query : string){
@@ -21,12 +21,14 @@ export class DisplayresultService {
   }
  
 
-  getResultsToDisplay(){          
+  getResultsToDisplay(){        
     this.http.get('http://localhost:28750/api/displayrecipe/index')
     .map((data : Response) =>{
       return data.json() as Displaydata[];
     }).toPromise().then(x => {
-      this.dislpayDataList = x;
+      this.dislpayDataList = x; 
+      console.log('after service');
+      console.log(this.dislpayDataList);
     })    
   }
 }
