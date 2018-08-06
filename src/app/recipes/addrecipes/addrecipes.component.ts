@@ -257,7 +257,7 @@ savedata()
 
 moveon(){    
   this.recService.selectedcolumn = this.selectedItems; 
-  this.router.navigate(['displayresult', this.id]);
+  this.router.navigate(['displayresult', this.id, this.speciality, this.recipeparent, this.recipename]);
   //this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
 }
 

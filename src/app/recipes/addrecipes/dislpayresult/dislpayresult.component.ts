@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { ToastrService } from 'ngx-toastr'
 
 import {Addrecipe} from '../../shared/addrecipe.model';
 import {RecipedetailsService} from '../../shared/recipedetails.service';
@@ -23,9 +22,12 @@ private tableHead: Array<String>;
 private tableColName: Array<String>;     
   id:number;
   queryData:QueryClass;
+  speciality:string;
+  recipeparent:string;
+  recipename:string; 
 
   constructor(private _route:ActivatedRoute, public recService: RecipedetailsService
-              ,public disService:DisplayresultService, private toastr: ToastrService ) {
+              ,public disService:DisplayresultService, private router : Router ) {
     this.tableHead = new Array<string>();
     this.tableColName = new Array<string>();
 
@@ -44,7 +46,19 @@ private tableColName: Array<String>;
       this.id=+params.get('id');      
       });       
 
-     
+      this._route.paramMap.subscribe(params => {
+        this.speciality=params.get('sp');       
+        });
+        
+      this._route.paramMap.subscribe(params => {
+          this.recipeparent=params.get('rp');   
+         
+          });
+  
+      this._route.paramMap.subscribe(params => {
+         this.recipename=params.get('r');
+            }); 
+             
       this.disService.postRecipe(this.recService.query)
       .subscribe(data => { 
         this.disService.getResultsToDisplay();           
@@ -59,6 +73,15 @@ private tableColName: Array<String>;
       
   }
 
+  moveback()
+  {
+    this.router.navigate(['addrecipe',this.id, this.speciality, this.recipeparent, this.recipename])
+  }
+
+  movehome()
+  {
+    this.router.navigate([''])
+  }
 }
 
 export class UserDetails{

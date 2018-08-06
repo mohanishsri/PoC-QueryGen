@@ -49,7 +49,7 @@ import { DisplayresultService } from './recipes/shared/displayresult.service';
       {path:'', component:RecipesComponent},
       { path:'createrecipe/:id/:sp/:rp/:r', component:CreaterecipeComponent },
       { path:'addrecipe/:id/:sp/:rp/:r', component:AddrecipesComponent },
-      { path:'displayresult/:id', component:DislpayresultComponent },
+      { path:'displayresult/:id/:sp/:rp/:r', component:DislpayresultComponent },
       { path:'popup', component:NewrecipeComponent },
       { path:'model', component:AddattributeComponent }
     ])       
