@@ -21,6 +21,8 @@ import { RecipedetailsService } from './recipes/shared/recipedetails.service';
 import { DislpayresultComponent } from './recipes/addrecipes/dislpayresult/dislpayresult.component';
 import { DyndisplayresultComponent } from './recipes/addrecipes/dyndisplayresult/dyndisplayresult.component';
 import { DisplayresultService } from './recipes/shared/displayresult.service';
+import { NewattributeService } from './recipes/shared/newattribute.service';
+import { CustomdataService } from './recipes/shared/customdata.service';
 
 
 @NgModule({
@@ -54,7 +56,7 @@ import { DisplayresultService } from './recipes/shared/displayresult.service';
       { path:'model', component:AddattributeComponent }
     ])       
   ],
-  providers: [RecipedetailsService, DisplayresultService],
+  providers: [RecipedetailsService, DisplayresultService, NewattributeService, CustomdataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

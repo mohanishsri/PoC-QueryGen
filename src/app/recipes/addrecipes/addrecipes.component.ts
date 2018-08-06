@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {BsModalService} from 'ngx-bootstrap';
+import {BsModalService} from 'ngx-bootstrap'; 
+
 import {BsModalRef, TabsetComponent,TabDirective} from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr'
 
 import{Addrecipe} from '../shared/addrecipe.model';
 import {NewrecipeComponent} from './newrecipe/newrecipe.component';
 import {RecipedetailsService} from '../shared/recipedetails.service';
+import { CustomdataService } from '../shared/customdata.service';
 
 @Component({
   selector: 'app-addrecipes',
@@ -32,9 +34,10 @@ export class AddrecipesComponent implements OnInit {
   recipename:string; 
   query:string;
 
+
   constructor(private _route:ActivatedRoute,private modalService: BsModalService, 
           private toastr: ToastrService, public recService: RecipedetailsService, private _routeback:Router
-          , private router : Router) { }
+          , private router : Router, public customdataService: CustomdataService) { }
 
   ngOnInit() {
 
@@ -141,26 +144,28 @@ onSelect(e){
 
 
 onItemSelect(item:any){
-  console.log(item);
-  console.log(this.selectedItems);
+  
 }
 OnItemDeSelect(item:any){
-  console.log(item);
-  console.log(this.selectedItems);
+  
 }
 onSelectAll(items: any){
-  console.log(items);
+  
 }
 onDeSelectAll(items: any){
-  console.log(items);
+  
 }
 
 
 openModalWithComponent(value:string) {
   if(value=="0")
   {
-    this.bsModalRef = this.modalService.show(NewrecipeComponent, {class: 'modal-lg'});
-
+    
+    this.customdataService.setData(this.newAttribute.Attribute);
+    
+    this.bsModalRef = this.modalService.show(NewrecipeComponent, {class: 'modal-lg'});   
+    
+   
     this.bsModalRef.content.triggerfromModel.subscribe(result => {
         this.oncloseModel(result);
         })
@@ -170,7 +175,7 @@ openModalWithComponent(value:string) {
 }
 
 oncloseModel(result)
-{
+{  
   this.creatednewattrname = result as string;
   this.dropdownvalues.splice(0,0,this.creatednewattrname);  
 }
@@ -197,8 +202,7 @@ genquery()
       str = this.selectedItems[i].itemName;
     }
  } 
-
- console.log(this.inputtable);
+ 
   var str1 = new String( "Select " + str ); 
   var str2 = new String( " From dbo." + this.inputtable); 
 

@@ -44,8 +44,7 @@ export class RecipeService {
     })
   }
 
-  getSearchRecipe(rec:Recipe){      
-    console.log('hi rec');    
+  getSearchRecipe(rec:Recipe){         
     this.http.get('http://localhost:28750/api/recipe/Search?searchvalues='+ rec.Recipe + '|' + rec.Recipe_Parent + '|' + rec.Specialty +'&id=0')
     .map((data : Response) =>{
       return data.json() as Recipe[];
