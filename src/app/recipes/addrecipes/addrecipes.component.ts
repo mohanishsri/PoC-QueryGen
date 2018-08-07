@@ -139,7 +139,14 @@ deleteFieldValue(index) {
     this.fieldArray.splice(index, 1);
 }
 
+onSelectCol()
+{  
+  
+  this.recService.getColValues(this.newAttribute.Attribute);
+}
+
 onSelect(e){
+  console.log(e.target.value);
   this.openModalWithComponent(e.target.value);
 }
 
@@ -159,7 +166,7 @@ onDeSelectAll(items: any){
 
 
 openModalWithComponent(value:string) {
-  if(value=="0")
+  if(value=="1")
   {
     
     this.customdataService.setData(this.newAttribute.Attribute);
@@ -177,8 +184,9 @@ openModalWithComponent(value:string) {
 
 oncloseModel(result)
 {  
-  this.creatednewattrname = result as string;
-  this.dropdownvalues.splice(0,0,this.creatednewattrname);  
+  //this.creatednewattrname = result as string;
+  //this.dropdownvalues.splice(0,0,this.creatednewattrname); 
+  this.recService.getColValues(this.newAttribute.Attribute);
 }
 
 backmove()

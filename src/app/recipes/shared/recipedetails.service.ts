@@ -11,7 +11,7 @@ import {Columnnamevalue} from './columnnamevalue.model';
 export class RecipedetailsService {
   recipeList : Addrecipe[];
   colNames: Columnnamevalue[]=[];
-  
+  colValues: string[]=[];
   query:string;
   selectedcolumn = [];
   
@@ -24,6 +24,15 @@ export class RecipedetailsService {
       return data.json() as Columnnamevalue[];
     }).toPromise().then(x => {
       this.colNames = x;
+    })
+  }
+
+  getColValues(colname:string){
+    this.http.get('http://localhost:28750/api/addrecipe/Index?colname='+colname)
+    .map((data : Response) =>{
+      return data.json() as string[];
+    }).toPromise().then(x => {
+      this.colValues = x;
     })
   }
 
