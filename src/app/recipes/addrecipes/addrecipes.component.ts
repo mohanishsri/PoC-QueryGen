@@ -58,6 +58,7 @@ export class AddrecipesComponent implements OnInit {
          this.recipename=params.get('r');
             });  
 
+    this.recService.getColNames();
     this.dropdownvalues = 
     [
       "Tonsilitis1",

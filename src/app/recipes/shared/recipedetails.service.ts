@@ -5,22 +5,25 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import {Addrecipe} from './addrecipe.model';
+import {Columnnamevalue} from './columnnamevalue.model';
 
 @Injectable()
 export class RecipedetailsService {
   recipeList : Addrecipe[];
+  colNames: Columnnamevalue[]=[];
+  
   query:string;
   selectedcolumn = [];
   
   
   constructor(private http : Http) { }
 
-  getRecipe(){
+  getColNames(){
     this.http.get('http://localhost:28750/api/addrecipe/Index')
     .map((data : Response) =>{
-      return data.json() as Addrecipe[];
+      return data.json() as Columnnamevalue[];
     }).toPromise().then(x => {
-      this.recipeList = x;
+      this.colNames = x;
     })
   }
 

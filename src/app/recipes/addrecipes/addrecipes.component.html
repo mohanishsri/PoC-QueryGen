@@ -9,7 +9,7 @@
       <tab heading="Select Column-Selection">
                            
                         <label for="exampleSelect2">Select Columns</label>
-                        <angular2-multiselect [data]="dropdownList" name="ddlselect" [(ngModel)]="selectedItems" 
+                        <angular2-multiselect [data]="recService.colNames" name="ddlselect" [(ngModel)]="selectedItems" 
                         [settings]="dropdownSettings" 
                         (onSelect)="onItemSelect($event)" 
                         (onDeSelect)="OnItemDeSelect($event)"
