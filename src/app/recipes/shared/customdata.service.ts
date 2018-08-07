@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class CustomdataService {
   private selectedcolname;
+  
   constructor() { }
 
-  setData(colname) {
+setData(colname) {
     this.selectedcolname = colname;
 }
 getData() {

@@ -225,7 +225,7 @@ savedata()
     s.Recipe = this.recipename;
     s.Attribute = this.attributevaluefromModel[i].columnname;
     s.Condition = '=';
-    s.Priority = ((document.getElementById("txtpriorty") as HTMLInputElement).value);;
+    s.Priority = ((document.getElementById("txtpriorty") as HTMLInputElement).value);
     s.PreLogicalOperator = '(';
     s.PostLogicalOperator = ')' + this.attributevaluefromModel[i].orandoperned;
     s.Codegroup = this.attributevaluefromModel[i].attributename;

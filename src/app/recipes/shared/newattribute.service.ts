@@ -20,11 +20,10 @@ export class NewattributeService {
     })
   }
 
-  saveNewAttribute(colname:string, rec : Columnnamevalue[]){    
+  saveNewAttribute(rec : Columnnamevalue[],colname:string){    
     var body = JSON.stringify(rec);    
-    var headerOptions = new Headers({'Content-Type':'application/json'});
+    var headerOptions = new Headers({'Content-Type':'application/json'});   
     var requestOptions = new RequestOptions({method : RequestMethod.Post,headers : headerOptions});
-    return this.http.post('http://localhost:28750/api/recipe/Save',body,requestOptions).map(x => x.json());
-  }
-
+    return this.http.post('http://localhost:28750/api/addattribute/Save?colname='+colname,body,requestOptions).map(x => x.json());
+  }  
 }

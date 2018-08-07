@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {BsModalRef} from 'ngx-bootstrap';
+import { ToastrService } from 'ngx-toastr'
 import { NewattributeService } from '../../shared/newattribute.service';
 import { CustomdataService } from '../../shared/customdata.service';
+import { Columnnamevalue } from '../../shared/columnnamevalue.model';
 
 @Component({
   selector: 'app-newrecipe',
@@ -12,9 +14,11 @@ export class NewrecipeComponent implements OnInit {
 
   @Output() triggerfromModel = new EventEmitter(); 
   attributename:string;
+  selectedcolvalue:string;
   selectedItems = [];
   dropdownSettings = {};
-  constructor(public bsModalRef: BsModalRef, public newattriServ: NewattributeService, private customdataService:CustomdataService) {   
+  constructor(public bsModalRef: BsModalRef, public newattriServ: NewattributeService, private customdataService:CustomdataService
+              ,private toastr: ToastrService) {   
     this.newattriServ.getColumnValues(this.customdataService.getData());
    }
 
@@ -33,22 +37,28 @@ export class NewrecipeComponent implements OnInit {
 
 
 onItemSelect(item:any){
-    console.log(item);
-    console.log(this.selectedItems);
+   
 }
 OnItemDeSelect(item:any){
-    console.log(item);
-    console.log(this.selectedItems);
+    
 }
 onSelectAll(items: any){
-    console.log(items);
+   
 }
 onDeSelectAll(items: any){
-    console.log(items);
+ 
 }
 
+Save()
+{
+
+  this.selectedcolvalue =  this.customdataService.getData() + '|' +this.attributename;
+  this.newattriServ.saveNewAttribute(this.selectedItems, this.selectedcolvalue).subscribe(data => {   
+  this.toastr.success('New Record Added Succcessfully', 'Recipe Register');
+  })
+}
   onclose()
-  {    
+  { 
     this.triggerfromModel.emit(this.attributename);
     this.bsModalRef.hide();
   }
