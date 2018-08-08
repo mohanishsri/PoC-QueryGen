@@ -25,6 +25,7 @@ private tableColName: Array<String>;
   speciality:string;
   recipeparent:string;
   recipename:string; 
+  querytodisplay: string;
 
   constructor(private _route:ActivatedRoute, public recService: RecipedetailsService
               ,public disService:DisplayresultService, private router : Router ) {
@@ -64,6 +65,7 @@ private tableColName: Array<String>;
         this.disService.getResultsToDisplay();           
       })                 
      
+      this.querytodisplay = this.recService.query;
 
     //this.userDetails.push(new UserDetails('Apple', 18, 'Male'));
      //this.userDetails.push(new UserDetails('Banana', 24, 'Female'));

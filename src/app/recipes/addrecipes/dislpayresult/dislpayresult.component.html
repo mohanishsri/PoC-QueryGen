@@ -1,8 +1,22 @@
-<button type="button" class="btn btn-primary" (click)="moveback()">Back</button>
-<button type="button" class="btn btn-primary" (click)="movehome()">Home</button>
-<div>
+<div id="body">
+    <div class="container">
+        <div style="text-align:center">
+          <h2 class="bg-secondary text-white">Display Recipe Result</h2>
+        </div>
+      </div>
+</div>
+
+
+<div class="container">
+    <textarea rows="4" cols="100" readonly [(ngModel)]="querytodisplay" name="exampleTextar" id="exampleTextarea"></textarea>                            
+
+    <button type="button" class="btn btn-primary" (click)="moveback()">Back</button>
+    <button type="button" class="btn btn-primary" (click)="movehome()">Home</button>
+    
+    
     <app-dyndisplayresult [tableHeads]="tableHead" 
                    [tableDatas]="userDetails" 
                    [tableColName]="tableColName">
     </app-dyndisplayresult>
-  </div>
+  
+</div>

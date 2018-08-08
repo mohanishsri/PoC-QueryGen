@@ -18,8 +18,7 @@ export class DyndisplayresultComponent implements OnInit {
   constructor(public disService:DisplayresultService) { }
 
   ngOnInit() {    
-    console.log('from component');
-    console.log(this.tableDatas);
+    
   } 
 
   ngOnChanges(changes: SimpleChanges) {
