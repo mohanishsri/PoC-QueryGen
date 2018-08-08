@@ -4,12 +4,14 @@
           <h2 class="bg-secondary text-white">Make Recipe</h2>
         </div>
       </div>
-<div class="body-container row">   
-  <tabset justified="true"   #staticTabs>   
-      <tab heading="Select Column-Selection">
-                           
-                        <label for="exampleSelect2">Select Columns</label>
-                        <angular2-multiselect [data]="recService.colNames" name="ddlselect" [(ngModel)]="selectedItems" 
+<div class="body-container row" style="height: 400px;" >   
+  <tabset justified="true" style="width: 100%"   #staticTabs>   
+      <tab heading="Select Column-Selection" style="width: 400px" >                        
+            <label for="exampleInputEmail1">Select Table</label>
+            <input type="text" class="form-control" readonly name="exampleInputTable" id="exampleInputTable" [(ngModel)]="inputtable" placeholder="GIRFT_NCIP_RnD_BaseComponent">      
+
+            <label for="exampleSelect2">Select Columns</label>
+            <angular2-multiselect [data]="recService.colNames" name="ddlselect" [(ngModel)]="selectedItems" 
                         [settings]="dropdownSettings" 
                         (onSelect)="onItemSelect($event)" 
                         (onDeSelect)="OnItemDeSelect($event)"
@@ -17,92 +19,98 @@
                         (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>                   
              
       </tab>
-      <tab heading="Select From-Selection">
-                          
-                        <label for="exampleInputEmail1">Select Table</label>
-                        <input type="text" class="form-control" readonly name="exampleInputTable" id="exampleInputTable" [(ngModel)]="inputtable" placeholder="GIRFT_NCIP_RnD_BaseComponent">      
-                
-              
-      </tab>
-      <tab heading="Where Attribute-Selection">
-          <table>             
-                  <tr>
-                      <td colspan="2">Priority</td>
-                      <td colspan="2">Function</td>
-                      <td colspan="2">Column</td>
-                      <td colspan="2">Operator</td>                      
-                      <td colspan="2">Value</td>
-                      <td colspan="2">OrAnd</td>
-                  </tr>             
-             
-                  <tr *ngFor="let field of fieldArray; let i = index">
-                      <td colspan="2">
-                          <input [(ngModel)]="field.Priority" type="text" name="{{field.Priority}}" />
-                      </td>
-                      <td colspan="2">
-                          <input [(ngModel)]="field.FunctionAttribute" type="text" name="{{field.FunctionAttribute}}" />
-                      </td>
-                      <td colspan="2">
-                          <input [(ngModel)]="field.Attribute"  type="text" name="{{field.Attribute}}" />
-                      </td>
-                      <td colspan="2">
-                          <input [(ngModel)]="field.Condition"  type="text" name="{{field.Condition}}" />
-                      </td>                     
-                      <td colspan="2">
-                          <input [(ngModel)]="field.Codegroup" type="text" name="{{field.Codegroup}}" />
-                      </td>
-                      <td colspan="2">
-                            <input [(ngModel)]="field.AndOr" type="text" name="{{field.AndOr}}" />
-                        </td>
-                      <td colspan="2">
-                          <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
-                      </td>
-                      
-                  </tr>
-                  <tr>
-                      <td colspan="2">
-                          <input type="text" id="txtpriorty" size="3" height="5" [(ngModel)]="newAttribute.Priority" name="txtpriorty" />
-                      </td>
-                      <td colspan="2">
-                          <select id="ddlfunctioname" name="ddlfunctioname" [(ngModel)]="newAttribute.FunctionAttribute">  
-                              <option value="0">--Select--</option>  
-                              <option value="Left(_,4)">Left(_,4)</option>  
-                              <option value="Right(_,4)">Right(_,4)</option>                            
-                            </select> 
-                      </td>
-                      <td colspan="2">                          
-                            <select id="ddlcolumnname" name="ddlcolumnname" (change)="onSelectCol()" [(ngModel)]="newAttribute.Attribute">  
-                                    <option value="0">--Select--</option>
-                                    <option *ngFor="let prod of recService.colNames">{{prod.itemName}} </option>  
-                            </select>  
-                      </td>
-                      <td colspan="2">
+      <tab heading="Where Attribute-Selection" class="tab-body" >
+            <div class="row">
+                    <div class="col-md-1">
+                            Priority
+                    </div>
+                    <div class="col-md-1">
+                            Function
+                    </div>
+                    <div class="col-md-2">
+                            Column
+                    </div>
+                    <div class="col-md-1">
+                            Operator
+                    </div>
+                    <div class="col-md-1">
+                            Value
+                    </div>
+                    <div class="col-md-1">
+                            OrAnd
+                    </div>
+                    <div class="col-md-1">
+                            OrAnd
+                    </div>
+            </div>
+            <div class="row" *ngFor="let field of fieldArray">                    
+                <div class="col-md-1">
+                        <input [(ngModel)]="field.Priority" type="text" size = "5" name="{{field.Priority}}" />
+                </div> 
+                <div class="col-md-1">
+                        <input [(ngModel)]="field.FunctionAttribute" type="text" size = "6" name="{{field.FunctionAttribute}}" />
+                </div>     
+                <div class="col-md-2">
+                        <input [(ngModel)]="field.Attribute" size = "20"  type="text" name="{{field.Attribute}}" />
+                </div> 
+                <div class="col-md-1">
+                        <input [(ngModel)]="field.Condition" size="5"  type="text" name="{{field.Condition}}" />
+                </div> 
+                <div class="col-md-1">
+                        <input [(ngModel)]="field.Codegroup" size="10" type="text" name="{{field.Codegroup}}" />
+                </div> 
+                <div class="col-md-1">
+                        <input [(ngModel)]="field.AndOr" type="text" size="5" name="{{field.AndOr}}" />
+                </div> 
+                <div class="col-md-1">
+                        <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+                </div>                    
+            </div>
+            <div class="row">                
+                    <div class="col-md-1">
+                         <input type="text" id="txtpriorty" size="5" [(ngModel)]="newAttribute.Priority" name="txtpriorty" />
+                    </div>
+                    <div class="col-md-1">
+                            <select id="ddlfunctioname" name="ddlfunctioname" [(ngModel)]="newAttribute.FunctionAttribute">  
+                                    <option value="0">--Select--</option>  
+                                    <option value="Left(_,4)">Left(_,4)</option>  
+                                    <option value="Right(_,4)">Right(_,4)</option>                            
+                                  </select>
+                    </div>
+                    <div class="col-md-2">
+                            <select id="ddlcolumnname" name="ddlcolumnname" style="width: 100%" (change)="onSelectCol()" 
+                            [(ngModel)]="newAttribute.Attribute">  
+                                                                <option value="0">--Select--</option>
+                                                                <option *ngFor="let prod of recService.colNames">{{prod.itemName}} </option>  
+                            </select>
+                    </div>
+                    <div class="col-md-1">
                             <select id="ddlfunctiovalue" name="ddlfunctiovalue" [(ngModel)]="newAttribute.Condition" >  
                                     <option value="--Select--">--Select--</option>  
                                     <option value="in">in</option>  
                                     <option value="=">=</option>                            
-                                  </select>                          
-                      </td>                     
-                      <td colspan="2">
-                            <select select id="ddlcolumnvalue" (change)="onSelect($event)" name="ddlcolumnvalue" [(ngModel)]="newAttribute.Codegroup">                                                                          
-                                    
-                                    <option value="0"></option>
-                                    <option value="1">--Select--</option>
-                                    <option *ngFor="let prod of recService.colValues">{{prod}} </option>                                     
-                            </select> 
-                      </td>
-                      <td colspan="2">
+                                  </select>
+                    </div>
+                    <div class="col-md-1">
+                        <select select id="ddlcolumnvalue" (change)="onSelect($event)" name="ddlcolumnvalue"
+                            [(ngModel)]="newAttribute.Codegroup">   
+                            <option value="0"></option>
+                            <option value="1">--Select--</option>
+                            <option *ngFor="let prod of recService.colValues">{{prod}} </option>  
+                        </select>
+                    </div>
+                    <div class="col-md-1">
                             <select id="ddloperandname" name="ddloperandname" [(ngModel)]="newAttribute.AndOr" >  
                                     <option value="0">--Select--</option>  
                                     <option value="OR">OR</option>  
                                     <option value="AND">AND</option>                            
-                                  </select>
-                      </td>
-                      <td>
-                          <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
-                      </td>
-                  </tr>             
-            </table>
+                            </select>
+                    </div>
+                    <div class="col-md-1">
+                            <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+                    </div>
+            </div>                                
+           
       </tab>
   </tabset> 
 </div>

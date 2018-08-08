@@ -70,7 +70,7 @@ this.dropdownSettings = {
     classes:"myclass custom-class"
   }; 
 
-    this.staticTabs.tabs[1].active = true;
+    this.staticTabs.tabs[0].active = true;
   }
 
 
@@ -87,13 +87,11 @@ deleteFieldValue(index) {
 }
 
 onSelectCol()
-{  
-  
+{    
   this.recService.getColValues(this.newAttribute.Attribute);
 }
 
-onSelect(e){
-  console.log(e.target.value);
+onSelect(e){ 
   this.openModalWithComponent(e.target.value);
 }
 
