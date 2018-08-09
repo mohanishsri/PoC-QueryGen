@@ -102,7 +102,7 @@ selectedAttributes:string='';
             {"id":10,"itemName":"OPERTN_24_Derived"},
             
 
-          ];
+          ];          
           
 this.dropdownSettings = { 
           singleSelection: false, 
@@ -124,18 +124,16 @@ this.dropdownSettings = {
   }
 
 onItemSelect(item:any){
-    console.log(item);
-    console.log(this.selectedItems);
+ 
 }
 OnItemDeSelect(item:any){
-    console.log(item);
-    console.log(this.selectedItems);
+  
 }
 onSelectAll(items: any){
-    console.log(items);
+  
 }
 onDeSelectAll(items: any){
-    console.log(items);
+   
 }
 
 openModalWithComponent() {

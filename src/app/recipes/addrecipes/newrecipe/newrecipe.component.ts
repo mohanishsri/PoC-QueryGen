@@ -51,11 +51,20 @@ onDeSelectAll(items: any){
 
 Save()
 {
-
-  this.selectedcolvalue =  this.customdataService.getData() + '|' +this.attributename;
-  this.newattriServ.saveNewAttribute(this.selectedItems, this.selectedcolvalue).subscribe(data => {   
-  this.toastr.success('New Record Added Succcessfully', 'Recipe Register');
-  })
+if(this.selectedItems.length==0)
+{
+  this.toastr.warning("Please select attribute name");
+}
+else if(this.attributename==null)
+{
+  this.toastr.warning("Please select attribute values");
+}
+else{
+    this.selectedcolvalue =  this.customdataService.getData() + '|' +this.attributename;
+    this.newattriServ.saveNewAttribute(this.selectedItems, this.selectedcolvalue).subscribe(data => {   
+    this.toastr.success('New Record Added Succcessfully', 'Recipe Register');
+    })
+  }
 }
   onclose()
   { 
