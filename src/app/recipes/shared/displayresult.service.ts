@@ -13,16 +13,16 @@ export class DisplayresultService {
   dislpayDataList : Array<Displaydata> = new Array<Displaydata>();
   constructor(private http : Http) { }
 
-  postRecipe(query : string){
+  postRecipe(query : string, Id:number){
     var body = JSON.stringify(query);    
     var headerOptions = new Headers({'Content-Type':'application/json'});
     var requestOptions = new RequestOptions({method : RequestMethod.Post,headers : headerOptions});
-    return this.http.post('http://localhost:28750/api/displayrecipe/Create',body,requestOptions).map(x => x.json());
+    return this.http.post('http://localhost:28750/api/displayrecipe/Create?Id='+Id,body,requestOptions).map(x => x.json());
   }
  
 
-  getResultsToDisplay(){        
-    this.http.get('http://localhost:28750/api/displayrecipe/index')
+  getResultsToDisplay(Id:number){        
+    this.http.get('http://localhost:28750/api/displayrecipe/index?Id='+Id)
     .map((data : Response) =>{
       return data.json() as Displaydata[];
     }).toPromise().then(x => {

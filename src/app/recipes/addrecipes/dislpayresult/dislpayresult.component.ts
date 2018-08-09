@@ -7,6 +7,7 @@ import {RecipedetailsService} from '../../shared/recipedetails.service';
 import {DisplayresultService} from '../../shared/displayresult.service';
 
 import {Displaydata, QueryClass} from '../../shared/displaydata.model';
+import  {CustomdataService} from '../../shared/customdata.service';
 
 @Component({
   selector: 'app-dislpayresult',
@@ -25,7 +26,8 @@ private tableColName: Array<String>;
   querytodisplay: string;
 
   constructor(public bsModalRef: BsModalRef,private _route:ActivatedRoute, public recService: RecipedetailsService
-              ,public disService:DisplayresultService, private router : Router ) {
+              ,public disService:DisplayresultService, public customerDataService: CustomdataService,
+               private router : Router ) {
     this.tableHead = new Array<string>();
     this.tableColName = new Array<string>();
 
@@ -40,9 +42,9 @@ private tableColName: Array<String>;
 
   ngOnInit() {    
     
-      this.disService.postRecipe(this.recService.query)
+      this.disService.postRecipe(this.recService.query, this.customerDataService.getId())
       .subscribe(data => { 
-        this.disService.getResultsToDisplay();           
+        this.disService.getResultsToDisplay(this.customerDataService.getId());           
       })                 
      
       this.querytodisplay = this.recService.query;

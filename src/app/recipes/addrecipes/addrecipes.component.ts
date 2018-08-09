@@ -327,6 +327,7 @@ moveon(){
     if(this.rectosave.length>0)
       {
         this.recService.selectedcolumn = this.selectedItems; 
+        this.customdataService.setId(this.id);
 
         this.bsModalRef = this.modalService.show(DislpayresultComponent, {class: 'modal-lg'});   
     
