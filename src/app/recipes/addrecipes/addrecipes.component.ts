@@ -9,6 +9,7 @@ import{Addrecipe} from '../shared/addrecipe.model';
 import {NewrecipeComponent} from './newrecipe/newrecipe.component';
 import {RecipedetailsService} from '../shared/recipedetails.service';
 import { CustomdataService } from '../shared/customdata.service';
+import { BrowserPlatformLocation } from '../../../../node_modules/@angular/platform-browser/src/browser/location/browser_platform_location';
 
 @Component({
   selector: 'app-addrecipes',
@@ -33,6 +34,7 @@ export class AddrecipesComponent implements OnInit {
   recipeparent:string;
   recipename:string; 
   query:string;
+  validationmsg:string='';
 
 
   constructor(private _route:ActivatedRoute,private modalService: BsModalService, 
@@ -73,12 +75,74 @@ this.dropdownSettings = {
     this.staticTabs.tabs[0].active = true;
   }
 
+ValidationInputFields(callby:string):boolean
+{  
+  this.validationmsg='';
+  var valid = true;
+
+  if(callby=='add' && this.rectosave.length>=1)
+  {
+    console.log('check 1');
+    for(let i=0; i<this.rectosave.length; i++)
+    {
+      console.log('check 2');
+      if(this.rectosave[i].AndOr==null)
+      {
+        console.log('check 3');
+        this.toastr.warning("can't add more clause as missed Or/And condition"); 
+        valid = false;
+      }
+    }        
+  }
+
+  if(this.selectedItems.length==0)
+      {
+        this.validationmsg+=' "Select Columns", \n';
+      }
+  
+  if(valid && callby=='add')
+  {     
+
+      if(this.newAttribute.Attribute==null || this.newAttribute.Attribute=='0')
+      {
+        this.validationmsg+=' "Display Column" , \n';
+        
+      }
+      if(this.newAttribute.Priority==null)
+      {
+        this.validationmsg+=' "Priority" , \n';    
+      }
+      if(this.newAttribute.Condition==null)
+      {
+        this.validationmsg+=' "Condition" , \n';
+        
+      }
+      
+      if(this.newAttribute.Codegroup==null || this.newAttribute.Codegroup=='0' || this.newAttribute.Codegroup=='1')
+      {
+        this.validationmsg+=' "Code Group", \n';
+        
+      }
+  }
+
+  if(this.validationmsg!='')
+  {
+    valid = false;
+    this.validationmsg = 'Please select Following :' + '\n' + this.validationmsg;
+    this.toastr.warning(this.validationmsg);
+  }
+  
+
+  return valid;
+}
 
 addFieldValue() {
+  if(this.ValidationInputFields('add'))
+  {
     this.fieldArray.push(this.newAttribute);
     this.rectosave.push(this.newAttribute);// for save
-
-    this.newAttribute = new Addrecipe();
+    this.newAttribute = new Addrecipe();     
+  } 
 }
 
 deleteFieldValue(index) {
@@ -88,11 +152,17 @@ deleteFieldValue(index) {
 
 onSelectCol()
 {    
-  this.recService.getColValues(this.newAttribute.Attribute);
+  if(this.newAttribute.Attribute!='0')
+  {
+    this.recService.getColValues(this.newAttribute.Attribute);
+  }
 }
 
 onSelect(e){ 
-  this.openModalWithComponent(e.target.value);
+  if(this.newAttribute.Attribute!='0' && this.newAttribute.Attribute!=null)
+  {
+    this.openModalWithComponent(e.target.value);
+  }
 }
 
 
@@ -129,9 +199,10 @@ openModalWithComponent(value:string) {
 
 oncloseModel(result)
 {  
-  //this.creatednewattrname = result as string;
+  this.creatednewattrname = result as string;  
   //this.dropdownvalues.splice(0,0,this.creatednewattrname); 
   this.recService.getColValues(this.newAttribute.Attribute);
+  this.newAttribute.Codegroup = this.creatednewattrname;
 }
 
 backmove()
@@ -139,84 +210,130 @@ backmove()
     this._routeback.navigate(['']);
   }
 
+ValidationInputFieldOnSubmit():boolean
+{
+  var valid=true;
+
+      if(this.rectosave.length==0)
+        {
+          this.toastr.warning("Please select at least one where clause");
+          valid = false;
+        }
+
+      else if(this.rectosave.length>1)
+      {
+        for(let i=0; i<this.rectosave.length-1; i++)
+        {
+          if(this.rectosave[i].AndOr==null)
+          {
+            this.toastr.warning("Please select missing conditional 'And/Or' operator"); 
+            valid = false;
+          }
+        }        
+      }
+
+  return valid;
+}
+
 genquery()
-{  
-  this.query='';
+{   
+    if(this.ValidationInputFields('submit'))
+    {      
+        this.query='';
 
-  let str:string='';      
-    
-  for(let i=0; i<this.selectedItems.length; i++){
-   
-    if(str!='')
-    {
-      str = str + ', ' + this.selectedItems[i].itemName + ' ';
-    }
-    else
-    {
-      str = this.selectedItems[i].itemName;
-    }
- } 
- 
-  var str1 = new String( "Select " + str ); 
-  var str2 = new String( " From dbo." + this.inputtable); 
+        let str:string='';      
+          
+        for(let i=0; i<this.selectedItems.length; i++){
+        
+          if(str!='')
+          {
+            str = str + ', ' + this.selectedItems[i].itemName + ' ';
+          }
+          else
+          {
+            str = this.selectedItems[i].itemName;
+          }
+      } 
+      
+        var str1 = new String( "Select " + str ); 
+        var str2 = new String( " From dbo." + this.inputtable); 
 
-  var strfinal = str1.concat(str2.toString()); 
-  
+        var strfinal = str1.concat(str2.toString()); 
+        
 
-  var strwhere = '';
-  
-  for(let i=0;i<this.rectosave.length;i++)
-  {    
-    
-    var orand = this.rectosave[i].AndOr!=null?this.rectosave[i].AndOr:"";
+        var strwhere = '';
+        
+        for(let i=0;i<this.rectosave.length;i++)
+        {    
+          
+          var orand = this.rectosave[i].AndOr!=null?this.rectosave[i].AndOr:"";
 
-    var colname = this.rectosave[i].FunctionAttribute!=null?
-                  this.rectosave[i].FunctionAttribute.replace("_", this.rectosave[i].Attribute):this.rectosave[i].Attribute;
+          var colname = this.rectosave[i].FunctionAttribute!=null?
+                        this.rectosave[i].FunctionAttribute.replace("_", this.rectosave[i].Attribute):this.rectosave[i].Attribute;
 
-    this.rectosave[i].PreLogicalOperator = "(";
-    this.rectosave[i].PostLogicalOperator = ")";
+          this.rectosave[i].PreLogicalOperator = "(";
+          this.rectosave[i].PostLogicalOperator = ")";
 
-    if(strwhere=='')
-    {
-      strwhere = " Where " + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
-                            this.rectosave[i].Condition + ' ' +
-                            "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
-                          "'" + this.rectosave[i].Codegroup +"' ) "+ this.rectosave[i].PostLogicalOperator + orand + " "; 
-    }
-    else
-    {
-      strwhere = strwhere + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
-                            this.rectosave[i].Condition + ' ' +
-                            "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
-                            "'"+ this.rectosave[i].Codegroup +"')"+ this.rectosave[i].PostLogicalOperator + orand;
-    }
-  } 
-  this.query = strfinal.concat(strwhere.toString());      
-  this.recService.query = this.query;
+          if(strwhere=='')
+          {
+            strwhere = " Where " + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
+                                  this.rectosave[i].Condition + ' ' +
+                                  "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
+                                "'" + this.rectosave[i].Codegroup +"' ) "+ this.rectosave[i].PostLogicalOperator + orand + " "; 
+          }
+          else
+          {
+            strwhere = strwhere + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
+                                  this.rectosave[i].Condition + ' ' +
+                                  "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
+                                  "'"+ this.rectosave[i].Codegroup +"')"+ this.rectosave[i].PostLogicalOperator + orand;
+          }
+        } 
+        this.query = strfinal.concat(strwhere.toString());      
+        this.recService.query = this.query;
+  }
 }
 
 savedata()
 {
-
-  for(let i=0; i<this.rectosave.length;i++)
+  if(this.ValidationInputFields('save'))
   {
-    this.rectosave[i].RecipeId = this.id;
-    this.rectosave[i].Specialty = this.speciality;
-    this.rectosave[i].Recipe_Parent = this.recipeparent;
-    this.rectosave[i].Recipe = this.recipename;
-  }
-
-  this.recService.saveRecipe(this.rectosave).subscribe(data => {    
-  });;
-
-  this.toastr.success('New Record Added Succcessfully', 'Recipe Saved');
-        
+    if(this.rectosave.length>0)
+      {
+        for(let i=0; i<this.rectosave.length;i++)
+        {
+          this.rectosave[i].RecipeId = this.id;
+          this.rectosave[i].Specialty = this.speciality;
+          this.rectosave[i].Recipe_Parent = this.recipeparent;
+          this.rectosave[i].Recipe = this.recipename;
+        }
+      
+        this.recService.saveRecipe(this.rectosave).subscribe(data => {    
+        });;
+      
+        this.toastr.success('New Record Added Succcessfully', 'Recipe Saved');
+      }
+    else
+    {
+      this.toastr.warning("No where clause selected");
+    }
+  }     
 }
 
 moveon(){    
-  this.recService.selectedcolumn = this.selectedItems; 
-  this.router.navigate(['displayresult', this.id, this.speciality, this.recipeparent, this.recipename]);
-  //this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
+  if(this.ValidationInputFields('save'))
+  {
+    if(this.rectosave.length>0)
+      {
+        this.recService.selectedcolumn = this.selectedItems; 
+        this.router.navigate(['displayresult', this.id, this.speciality, this.recipeparent, this.recipename]);
+        //this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
+      }
+    else
+    {
+      this.toastr.warning("No where clause selected");
+    }
+  }  
 }
 
 }

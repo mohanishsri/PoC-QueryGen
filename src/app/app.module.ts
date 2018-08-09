@@ -6,6 +6,7 @@ import {RouterModule, Router} from '@angular/router';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import {TabsModule} from 'ngx-bootstrap';
 import {ModalModule} from 'ngx-bootstrap/modal';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 import { AppComponent } from './app.component';
 import { RecipesComponent } from './recipes/recipes.component';
@@ -42,6 +43,7 @@ import { CustomdataService } from './recipes/shared/customdata.service';
     BrowserModule,    
     NgxPaginationModule,    
     AngularMultiSelectModule, 
+    BrowserAnimationsModule,
     TabsModule.forRoot(),
     ModalModule.forRoot(),
     FormsModule,

@@ -79,9 +79,9 @@
                     </div>
                     <div class="col-md-2">
                             <select id="ddlcolumnname" name="ddlcolumnname" style="width: 100%" (change)="onSelectCol()" 
-                            [(ngModel)]="newAttribute.Attribute">  
-                                                                <option value="0">--Select--</option>
-                                                                <option *ngFor="let prod of recService.colNames">{{prod.itemName}} </option>  
+                            [(ngModel)]="newAttribute.Attribute">     
+                            <option value="0"></option>                         
+                            <option *ngFor="let prod of recService.colNames" >{{prod.itemName}} </option>  
                             </select>
                     </div>
                     <div class="col-md-1">
@@ -92,10 +92,10 @@
                                   </select>
                     </div>
                     <div class="col-md-1">
-                        <select select id="ddlcolumnvalue" (change)="onSelect($event)" name="ddlcolumnvalue"
+                        <select select id="ddlcolumnvalue" (change)="onSelect($event)" style="width: 100%" name="ddlcolumnvalue"
                             [(ngModel)]="newAttribute.Codegroup">   
                             <option value="0"></option>
-                            <option value="1">--Select--</option>
+                            <option value="1">--Select New--</option>                          
                             <option *ngFor="let prod of recService.colValues">{{prod}} </option>  
                         </select>
                     </div>

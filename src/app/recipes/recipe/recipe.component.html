@@ -2,15 +2,15 @@
     <input type="hidden" name="RecipeId" #RecipeId="ngModel" [(ngModel)]="recService.selectedRecipe.RecipeId">
   <div class="form-row">
     <div class="form-group col-md-4">
-      <input class="form-control" name="Specialty" #Specialty="ngModel" [(ngModel)]="recService.selectedRecipe.Specialty"
+      <input class="form-control" name="Specialty" #Specialty="ngModel" required [(ngModel)]="recService.selectedRecipe.Specialty"
         placeholder="Specialty">      
     </div>
     <div class="form-group col-md-4">
-      <input class="form-control" name="Recipe_Parent" #Recipe_Parent="ngModel" [(ngModel)]="recService.selectedRecipe.Recipe_Parent" placeholder="Recipe Parent"
+      <input class="form-control" name="Recipe_Parent" #Recipe_Parent="ngModel" required [(ngModel)]="recService.selectedRecipe.Recipe_Parent" placeholder="Recipe Parent"
      >      
     </div>
     <div class="form-group col-md-4">
-      <input class="form-control" name="Recipe" #Recipe="ngModel" [(ngModel)]="recService.selectedRecipe.Recipe" placeholder="Recipe"
+      <input class="form-control" name="Recipe" #Recipe="ngModel" required [(ngModel)]="recService.selectedRecipe.Recipe" placeholder="Recipe"
       >      
     </div>   
   </div>
@@ -29,4 +29,7 @@
         <i class="fa fa-repeat"></i> Reset</button>
     </div>
   </div>  
+  <div class="alert alert-danger" *ngIf="Specialty.touched && !Specialty.valid">Enter Specialty Name</div>
+  <div class="alert alert-danger" *ngIf="Recipe_Parent.touched && !Recipe_Parent.valid">Enter Recipe Parent Name</div>
+  <div class="alert alert-danger" *ngIf="Recipe.touched && !Recipe.valid">Enter Recipe Name</div>
 </form>
