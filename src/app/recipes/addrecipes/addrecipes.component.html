@@ -42,10 +42,10 @@
             </div>
             <div class="row" *ngFor="let field of fieldArray">                    
                 <div class="col-md-1">
-                        <input [(ngModel)]="field.Priority" type="text" size = "5" name="{{field.Priority}}" />
+                        <input [(ngModel)]="field.Priority" type="text"  name="{{field.Priority}}" />
                 </div> 
                 <div class="col-md-1">
-                        <input [(ngModel)]="field.FunctionAttribute" type="text" size = "6" name="{{field.FunctionAttribute}}" />
+                        <input [(ngModel)]="field.FunctionAttribute" type="text" name="{{field.FunctionAttribute}}" />
                 </div>     
                 <div class="col-md-2">
                         <input [(ngModel)]="field.Attribute" size = "20"  type="text" name="{{field.Attribute}}" />
@@ -65,7 +65,7 @@
             </div>
             <div class="row">                
                     <div class="col-md-1">
-                         <input type="text" id="txtpriorty" size="5" [(ngModel)]="newAttribute.Priority" name="txtpriorty" />
+                         <input type="text" id="txtpriorty" style="font-size: 10pt" size="6" [(ngModel)]="newAttribute.Priority" name="txtpriorty" />
                     </div>
                     <div class="col-md-1">
                             <select id="ddlfunctioname" name="ddlfunctioname" [(ngModel)]="newAttribute.FunctionAttribute">  
@@ -104,7 +104,7 @@
                             </select>
                     </div>
                     <div class="col-md-1">
-                            <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+                            <button class="btn btn-default" style="align-content: center; font-size: 12pt; height: 24pt;" type="button" (click)="addFieldValue()">Add</button>
                     </div>
             </div>                                
            

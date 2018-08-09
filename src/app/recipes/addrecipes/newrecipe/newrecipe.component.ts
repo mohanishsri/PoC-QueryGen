@@ -51,11 +51,13 @@ onDeSelectAll(items: any){
 
 Save()
 {
-if(this.selectedItems.length==0)
+
+if(this.attributename==null)
 {
   this.toastr.warning("Please select attribute name");
 }
-else if(this.attributename==null)
+else
+if(this.selectedItems.length==0)
 {
   this.toastr.warning("Please select attribute values");
 }
