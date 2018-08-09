@@ -53,7 +53,7 @@ import { CustomdataService } from './recipes/shared/customdata.service';
       {path:'', component:RecipesComponent},
       { path:'createrecipe/:id/:sp/:rp/:r', component:CreaterecipeComponent },
       { path:'addrecipe/:id/:sp/:rp/:r', component:AddrecipesComponent },
-      { path:'displayresult/:id/:sp/:rp/:r', component:DislpayresultComponent },
+      { path:'displayresult', component:DislpayresultComponent },
       { path:'popup', component:NewrecipeComponent },
       { path:'model', component:AddattributeComponent }
     ])       

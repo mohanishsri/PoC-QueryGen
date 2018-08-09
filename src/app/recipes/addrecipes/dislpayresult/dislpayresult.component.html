@@ -10,9 +10,8 @@
 <div class="container">
     <textarea rows="4" cols="100" readonly [(ngModel)]="querytodisplay" name="exampleTextar" id="exampleTextarea"></textarea>                            
 
-    <button type="button" class="btn btn-primary" (click)="moveback()">Back</button>
+    <button type="button" class="btn btn-primary" (click)="moveback()">Close</button>
     <button type="button" class="btn btn-primary" (click)="movehome()">Home</button>
-    
     
     <app-dyndisplayresult [tableHeads]="tableHead" 
                    [tableDatas]="userDetails" 

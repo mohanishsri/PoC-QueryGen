@@ -10,6 +10,7 @@ import {NewrecipeComponent} from './newrecipe/newrecipe.component';
 import {RecipedetailsService} from '../shared/recipedetails.service';
 import { CustomdataService } from '../shared/customdata.service';
 import { BrowserPlatformLocation } from '../../../../node_modules/@angular/platform-browser/src/browser/location/browser_platform_location';
+import { DislpayresultComponent } from './dislpayresult/dislpayresult.component';
 
 @Component({
   selector: 'app-addrecipes',
@@ -326,7 +327,18 @@ moveon(){
     if(this.rectosave.length>0)
       {
         this.recService.selectedcolumn = this.selectedItems; 
-        this.router.navigate(['displayresult', this.id, this.speciality, this.recipeparent, this.recipename]);
+
+        this.bsModalRef = this.modalService.show(DislpayresultComponent, {class: 'modal-lg'});   
+    
+   
+        this.bsModalRef.content.triggerfromModel.subscribe(result => {
+            this.oncloseModel(result);
+            })
+            
+        this.bsModalRef.content.closeBtnName = 'Close';
+
+
+        //this.router.navigate(['displayresult', this.id, this.speciality, this.recipeparent, this.recipename]);
         //this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
       }
     else

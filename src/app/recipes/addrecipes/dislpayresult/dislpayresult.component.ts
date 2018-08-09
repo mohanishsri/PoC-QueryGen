@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import {BsModalRef} from 'ngx-bootstrap';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {Addrecipe} from '../../shared/addrecipe.model';
@@ -12,22 +13,18 @@ import {Displaydata, QueryClass} from '../../shared/displaydata.model';
   templateUrl: './dislpayresult.component.html',
   styleUrls: ['./dislpayresult.component.css']
 })
-export class DislpayresultComponent implements OnInit {
+export class DislpayresultComponent implements OnInit {  
 // fetch or create an Object of UserDetails type and pass it to dynamic-table
 //private userDetails: Array<UserDetails>;
 private userDetails: Array<Displaydata>;// = new Array<any>();// Displaydata[]=[]//Array<Displaydata>;
 // required to provide the table header, you can call an api or hard code the column name.
 private tableHead: Array<String>;  
 // optional, you can hard code the property name or just send the data of an object and dynamic-table component will figure out.
-private tableColName: Array<String>;     
-  id:number;
-  queryData:QueryClass;
-  speciality:string;
-  recipeparent:string;
-  recipename:string; 
+private tableColName: Array<String>;       
+  queryData:QueryClass;  
   querytodisplay: string;
 
-  constructor(private _route:ActivatedRoute, public recService: RecipedetailsService
+  constructor(public bsModalRef: BsModalRef,private _route:ActivatedRoute, public recService: RecipedetailsService
               ,public disService:DisplayresultService, private router : Router ) {
     this.tableHead = new Array<string>();
     this.tableColName = new Array<string>();
@@ -41,25 +38,8 @@ private tableColName: Array<String>;
       //this.userDetails = new Array<UserDetails>();      
    }
 
-  ngOnInit() {
+  ngOnInit() {    
     
-    this._route.paramMap.subscribe(params => {
-      this.id=+params.get('id');      
-      });       
-
-      this._route.paramMap.subscribe(params => {
-        this.speciality=params.get('sp');       
-        });
-        
-      this._route.paramMap.subscribe(params => {
-          this.recipeparent=params.get('rp');   
-         
-          });
-  
-      this._route.paramMap.subscribe(params => {
-         this.recipename=params.get('r');
-            }); 
-             
       this.disService.postRecipe(this.recService.query)
       .subscribe(data => { 
         this.disService.getResultsToDisplay();           
@@ -76,12 +56,14 @@ private tableColName: Array<String>;
   }
 
   moveback()
-  {
-    this.router.navigate(['addrecipe',this.id, this.speciality, this.recipeparent, this.recipename])
+  {    
+    this.bsModalRef.hide();
+    //this.router.navigate(['addrecipe',this.id, this.speciality, this.recipeparent, this.recipename])
   }
 
   movehome()
-  {
+  {   
+    this.bsModalRef.hide();
     this.router.navigate([''])
   }
 }
