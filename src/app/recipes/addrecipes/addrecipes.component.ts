@@ -329,15 +329,7 @@ moveon(){
         this.recService.selectedcolumn = this.selectedItems; 
         this.customdataService.setId(this.id);
 
-        this.bsModalRef = this.modalService.show(DislpayresultComponent, {class: 'modal-lg'});   
-    
-   
-        this.bsModalRef.content.triggerfromModel.subscribe(result => {
-            this.oncloseModel(result);
-            })
-            
-        this.bsModalRef.content.closeBtnName = 'Close';
-
+        this.bsModalRef = this.modalService.show(DislpayresultComponent, {class: 'modal-lg'});
 
         //this.router.navigate(['displayresult', this.id, this.speciality, this.recipeparent, this.recipename]);
         //this.router.navigate(['createrecipe', rec.RecipeId, rec.Specialty, rec.Recipe_Parent, rec.Recipe])
@@ -348,5 +340,7 @@ moveon(){
     }
   }  
 }
+
+
 
 }

@@ -42,10 +42,10 @@
             </div>
             <div class="row" *ngFor="let field of fieldArray">                    
                 <div class="col-md-1">
-                        <input [(ngModel)]="field.Priority" type="text"  name="{{field.Priority}}" />
+                        <input [(ngModel)]="field.Priority" type="text" size="5"  name="{{field.Priority}}" />
                 </div> 
                 <div class="col-md-1">
-                        <input [(ngModel)]="field.FunctionAttribute" type="text" name="{{field.FunctionAttribute}}" />
+                        <input [(ngModel)]="field.FunctionAttribute" type="text" size="5" name="{{field.FunctionAttribute}}" />
                 </div>     
                 <div class="col-md-2">
                         <input [(ngModel)]="field.Attribute" size = "20"  type="text" name="{{field.Attribute}}" />
