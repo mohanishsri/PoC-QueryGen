@@ -11,6 +11,8 @@ import {RecipedetailsService} from '../shared/recipedetails.service';
 import { CustomdataService } from '../shared/customdata.service';
 import { BrowserPlatformLocation } from '../../../../node_modules/@angular/platform-browser/src/browser/location/browser_platform_location';
 import { DislpayresultComponent } from './dislpayresult/dislpayresult.component';
+import { forEach } from '../../../../node_modules/@angular/router/src/utils/collection';
+import { element } from '../../../../node_modules/protractor';
 
 @Component({
   selector: 'app-addrecipes',
@@ -261,38 +263,68 @@ genquery()
 
         var strfinal = str1.concat(str2.toString()); 
         
+        var a = Array();
 
-        var strwhere = '';
-        
         for(let i=0;i<this.rectosave.length;i++)
-        {    
-          
-          var orand = this.rectosave[i].AndOr!=null?this.rectosave[i].AndOr:"";
+        {
+            a.push(this.rectosave[i].Priority)
+        }
 
-          var colname = this.rectosave[i].FunctionAttribute!=null?
-                        this.rectosave[i].FunctionAttribute.replace("_", this.rectosave[i].Attribute):this.rectosave[i].Attribute;
+        var unique = a.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+        
+        var strwhere = ' Where';
+        var rectosave1:Addrecipe[]=[];
+        var strtemp = '';
 
-          this.rectosave[i].PreLogicalOperator = "(";
-          this.rectosave[i].PostLogicalOperator = ")";
+        for(let j=0;j<unique.length;j++)
+        {
+          rectosave1=[];
 
-          if(strwhere=='')
-          {
-            strwhere = " Where " + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
-                                  this.rectosave[i].Condition + ' ' +
-                                  "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
-                                "'" + this.rectosave[i].Codegroup +"' ) "+ this.rectosave[i].PostLogicalOperator + orand + " "; 
-          }
-          else
-          {
-            strwhere = strwhere + this.rectosave[i].PreLogicalOperator + colname + ' ' + 
-                                  this.rectosave[i].Condition + ' ' +
-                                  "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
-                                  "'"+ this.rectosave[i].Codegroup +"')"+ this.rectosave[i].PostLogicalOperator + orand;
-          }
-        } 
+          for(let i=0;i<this.rectosave.length;i++)
+            { 
+              if(this.rectosave[i].Priority==unique[j].toString())                 
+              {
+                rectosave1.push(this.rectosave[i]);                
+              }             
+            }      
+            
+            if(strtemp=='')
+            {
+              strtemp = this.getwhereclause(rectosave1);
+            }
+            else
+            {
+              strtemp = strtemp + ' AND '+ this.getwhereclause(rectosave1);
+            }
+        }      
+       
+        strwhere = strwhere + '  ' + strtemp;
+        
         this.query = strfinal.concat(strwhere.toString());      
         this.recService.query = this.query;
   }
+}
+
+getwhereclause(rectosave1:Addrecipe[]):string
+{
+  var tempwhere : string = '';
+  for(let i=0;i<rectosave1.length;i++)
+  { 
+    var orand = (i<rectosave1.length-1)?(rectosave1[i].AndOr!=null?rectosave1[i].AndOr:""):'';
+
+    var colname = rectosave1[i].FunctionAttribute!=null?
+                  rectosave1[i].FunctionAttribute.replace("_", rectosave1[i].Attribute):rectosave1[i].Attribute;
+
+    rectosave1[i].PreLogicalOperator = "(";
+    rectosave1[i].PostLogicalOperator = ")";
+    
+    tempwhere = tempwhere  + "  " + colname + '  ' +
+                            rectosave1[i].Condition + ' ' +
+                            "(Select Value from [dbo].[Lookup_Codes_Mohanish] where Attribute_Alias = "+ 
+                          "'" + rectosave1[i].Codegroup +"' ) " + orand;    
+   
+   } 
+  return "( " +tempwhere+" )";
 }
 
 savedata()
