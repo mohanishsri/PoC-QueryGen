@@ -62,7 +62,7 @@ export class AddrecipesComponent implements OnInit {
             });  
 
     this.recService.getColNames();    
-    
+    this.recService.colValues=[]; // set inial value to blank
     
 this.dropdownSettings = { 
     singleSelection: false, 
