@@ -26,7 +26,7 @@ export class NewrecipeComponent implements OnInit {
     
     this.dropdownSettings = { 
     singleSelection: false, 
-    text:"Select Columns",
+    text:"Select Values",
     selectAllText:'Select All',
     unSelectAllText:'UnSelect All',
     enableSearchFilter: true,

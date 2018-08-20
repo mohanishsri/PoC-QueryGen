@@ -2,10 +2,12 @@
   <th>Specialty</th>
   <th>Recipe_Parent</th>
   <th>Recipe</th>
+  <th>Priority</th>
   <tr *ngFor="let rec of recService.recipeList | paginate: { itemsPerPage: 3, currentPage: p }">
     <td>{{rec.Specialty}}</td>
     <td>{{rec.Recipe_Parent}}</td>
     <td>{{rec.Recipe}}</td>
+    <td>{{rec.Priority}}</td>
     <td>
       <a class="btn" (click)="showForEdit(rec)">
         <i class="fa fa-pencil-square-o"></i>

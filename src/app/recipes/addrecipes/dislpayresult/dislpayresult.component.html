@@ -8,8 +8,9 @@
 
 
 <div class="container">
-    <textarea rows="4" cols="100" readonly [(ngModel)]="querytodisplay" name="exampleTextar" id="exampleTextarea"></textarea>                            
+    <textarea rows="4" cols="100" [(ngModel)]="querytodisplay" name="exampleTextar" id="exampleTextarea"></textarea>                            
 
+    <button type="button" class="btn btn-primary" (click)="executequery()">Execute</button>
     <button type="button" class="btn btn-primary" (click)="moveback()">Close</button>
     <button type="button" class="btn btn-primary" (click)="movehome()">Home</button>
     

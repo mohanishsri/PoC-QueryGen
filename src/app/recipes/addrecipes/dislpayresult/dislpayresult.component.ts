@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit, Output, EventEmitter } from '@angular/core';
 import {BsModalRef} from 'ngx-bootstrap';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -15,6 +15,7 @@ import  {CustomdataService} from '../../shared/customdata.service';
   styleUrls: ['./dislpayresult.component.css']
 })
 export class DislpayresultComponent implements OnInit {  
+@Output() triggerfromModel = new EventEmitter(); 
 // fetch or create an Object of UserDetails type and pass it to dynamic-table
 //private userDetails: Array<UserDetails>;
 private userDetails: Array<Displaydata>;// = new Array<any>();// Displaydata[]=[]//Array<Displaydata>;
@@ -58,7 +59,8 @@ private tableColName: Array<String>;
   }
 
   moveback()
-  {    
+  {   
+    this.triggerfromModel.emit(this.querytodisplay); 
     this.bsModalRef.hide();
     //this.router.navigate(['addrecipe',this.id, this.speciality, this.recipeparent, this.recipename])
   }
@@ -67,6 +69,15 @@ private tableColName: Array<String>;
   {   
     this.bsModalRef.hide();
     this.router.navigate([''])
+  }
+
+  executequery()
+  {
+    this.recService.query = this.querytodisplay;
+    this.disService.postRecipe(this.recService.query, this.customerDataService.getId())
+      .subscribe(data => { 
+        this.disService.getResultsToDisplay(this.customerDataService.getId());           
+      }) 
   }
 }
 
